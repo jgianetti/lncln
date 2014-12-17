@@ -1,0 +1,40 @@
+<script id="products_table" type="text/html">
+    <table class="cc-purchase-add-mod-products td-first-image" style="display:none;">
+        <thead>
+        <tr>
+            <th>{{{image}}}</th>
+            <th>{{{name}}}</th>
+            <th>{{{barcode_int}}}</th>
+            <th>{{{barcode}}}</th>
+            <th>{{{measurement_unit}}}</th>
+            <th>{{{stock}}}</th>
+            <th>{{{quantity}}}</th>
+            <th>{{{unit_price}}}</th>
+            <th>{{{quantity_delivered}}}</th>
+            <th class="action">Remover</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</script>
+<script id="products_tbody" type="text/html">
+    {{#products}}
+        <tr data-id="{{id}}">
+            <td><img src="{{image_src}}"></td>
+            <td>{{name}}</td>
+            <td>{{barcode_int}}</td>
+            <td>{{barcode}}</td>
+            <td>{{measurement_unit}}</td>
+            <td>{{stock}}</td>
+            <td><input type="text" name="products[{{id}}][quantity]" value="{{quantity}}">
+            <td>$<input type="text" name="products[{{id}}][unit_price]" value="{{unit_price}}">
+            <td><input type="hidden" name="products[{{id}}][quantity_delivered]" value="{{quantity_delivered}}">{{quantity_delivered}}</td>
+            <td>
+            {{#_removable}}
+                <a class="ui-state-default app-btn" onclick="App.modules.cc_purchase.add_mod.cc_product_remove($(this).closest('tr'));"><span class="ui-icon ui-icon-minusthick">remove</span></a>
+            {{/_removable}}
+            </td>
+        </tr>
+    {{/products}}
+</script>

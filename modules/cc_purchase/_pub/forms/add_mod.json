@@ -1,0 +1,98 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "hidden",
+            "name" : "cc_supplier_id"
+        },
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "cc_supplier_name",
+                        "id" : "cc-purchase-add-mod-cc-supplier-name",
+                        "caption" : "cc_purchase.cc_supplier_name",
+                        "autocomplete" : {
+                            "minLength": 2
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "opened_on",
+                        "id" : "cc-purchase-add-mod-opened-on",
+                        "caption" : "cc_purchase.opened_on",
+                        "placeholder" : "01/01/2013",
+                        "datepicker" : {
+                            "dateFormat" : "dd/mm/yy"
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "closed_on",
+                        "id" : "cc-purchase-add-mod-closed-on",
+                        "caption" : "cc_purchase.closed_on",
+                        "placeholder" : "01/01/2013",
+                        "datepicker" : {
+                            "dateFormat" : "dd/mm/yy"
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "order_num",
+                        "id" : "cc-purchase-add-mod-order-num",
+                        "caption" : "cc_purchase.order_num",
+                        "placeholder" : "123456"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "cc_product_name",
+                            "id" : "cc-purchase-add-mod-cc-product-name",
+                            "caption" : "cc_purchase.products",
+                            "autocomplete" : {
+                                "minLength": 3
+                            }
+                        },
+                        {
+                            "type" : "div",
+                            "name" : "products"
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "cc-purchase-add-mod-comments",
+                        "caption" : "cc_purchase.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

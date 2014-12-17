@@ -1,0 +1,52 @@
+{
+    "action" : "search",
+    "method" : "get",
+    "class" : "cmxform search",
+    "data-ajax-callback" : "paginate",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "name_barcode",
+                            "id" : "cc-product-search-name-barcode",
+                            "caption" : "cc_product.name_barcode",
+                            "placeholder" : "Duct tape",
+                            "list" : "cc-product-search-name-barcode-datalist"
+                        },
+                        {
+                            "type" : "datalist",
+                            "id" : "cc-product-search-name-barcode-datalist"
+                        }
+                    ]
+                },
+                {
+                    "type" : "fieldset",
+                    "html" : [
+                        {
+                            "type" : "p",
+                            "html" : [{
+                                "type" : "checkbox",
+                                "name" : "deleted",
+                                "id" : "cc-product-search-deleted",
+                                "value" : "1",
+                                "caption" : "cc_product.deleted"
+                            }]
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit",
+                        "value" : "buscar"
+                    }]
+                }
+            ]
+        }
+    ]
+}

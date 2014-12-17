@@ -1,0 +1,41 @@
+<script id="user_schedule" type="text/html">
+    <table class="user-schedule">
+        <thead>
+        <tr>
+            <th>{{{in_out}}}</th>
+            <th>{{{every_day}}}</th>
+            <th>{{{monday}}}</th>
+            <th>{{{tuesday}}}</th>
+            <th>{{{wednesday}}}</th>
+            <th>{{{thursday}}}</th>
+            <th>{{{friday}}}</th>
+            <th>{{{saturday}}}</th>
+            <th>{{{sunday}}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{{in}}}</td>
+            <td><input type="text" name="all_in" placeholder="HH:mm" onchange="App.modules.user.add_mod.schedule_all(this)"></td>
+            <td><input type="text" name="monday_in"></td>
+            <td><input type="text" name="tuesday_in"></td>
+            <td><input type="text" name="wednesday_in"></td>
+            <td><input type="text" name="thursday_in"></td>
+            <td><input type="text" name="friday_in"></td>
+            <td><input type="text" name="saturday_in"></td>
+            <td><input type="text" name="sunday_in"></td>
+        </tr>
+        <tr>
+            <td>{{{out}}}</td>
+            <td><input type="text" name="all_out" placeholder="HH:mm" onchange="App.modules.user.add_mod.schedule_all(this)"></td>
+            <td><input type="text" name="monday_out"></td>
+            <td><input type="text" name="tuesday_out"></td>
+            <td><input type="text" name="wednesday_out"></td>
+            <td><input type="text" name="thursday_out"></td>
+            <td><input type="text" name="friday_out"></td>
+            <td><input type="text" name="saturday_out"></td>
+            <td><input type="text" name="sunday_out"></td>
+        </tr>
+        </tbody>
+    </table>
+</script>

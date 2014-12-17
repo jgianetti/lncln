@@ -1,0 +1,170 @@
+<script id="list" type="text/html">
+        <table>
+            <thead>
+            <tr>
+                <th>{{{name}}}</th>
+                <th>{{{comments}}}</th>
+                <th class="action">{{{action}}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#categories}}
+            <tr data-id="{{id}}" class="category" onclick="App.modules.category.search.on_category($(this));">
+                <td>{{{name}}}</td>
+                <td>{{comments}}</td>
+                <td>
+                    <a class="ui-state-default ui-corner-all app-btn" title="{{{add_subcategory}}}" href="{{url_base}}/category/add?parent_id={{id}}"><span class="ui-icon ui-icon-plusthick">{{{add_subcategory}}}</span></a>
+                    {{#_mod}}<a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/category/mod?id={{id}}"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>{{/_mod}}
+                    {{#_del}}<a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/category/del?id={{id}}" data-push-state="0" data-ajax-callback="del"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>{{/_del}}
+                </td>
+            </tr>
+            {{/categories}}
+            </tbody>
+        </table>
+</script>
+
+<script id="tabs_script" type="text/html">
+    <div id="tabs">
+        <ul>
+            {{#tabs.schedule}}
+            <li><a href="#tab_schedule"><span>{{schedule}}</span></a></li>
+            {{/tabs.schedule}}
+            {{#tabs.acl}}
+            <li><a href="#tab_acl"><span>{{acl}}</span></a></li>
+            {{/tabs.acl}}
+            {{#tabs.non_working_days}}
+            <li><a href="#tab_non_working_days"><span>{{non_working_days}}</span></a></li>
+            {{/tabs.non_working_days}}
+        </ul>
+        {{#tabs.schedule}}
+        <div id="tab_schedule">
+            <form method="POST" data-ajax-callback="on_schedule">
+                <input type="hidden" name="id">
+                <table class="category-schedule">
+                    <thead>
+                    <tr>
+                        <th>{{{in_out}}}</th>
+                        <th>{{{every_day}}}</th>
+                        <th>{{{monday}}}</th>
+                        <th>{{{tuesday}}}</th>
+                        <th>{{{wednesday}}}</th>
+                        <th>{{{thursday}}}</th>
+                        <th>{{{friday}}}</th>
+                        <th>{{{saturday}}}</th>
+                        <th>{{{sunday}}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{{in}}}</td>
+                        <td><input type="text" placeholder="HH:mm" onchange="App.modules.category.search.schedule_all(this)"></td>
+                        <td><input type="text" name="monday_in"></td>
+                        <td><input type="text" name="tuesday_in"></td>
+                        <td><input type="text" name="wednesday_in"></td>
+                        <td><input type="text" name="thursday_in"></td>
+                        <td><input type="text" name="friday_in"></td>
+                        <td><input type="text" name="saturday_in"></td>
+                        <td><input type="text" name="sunday_in"></td>
+                    </tr>
+                    <tr>
+                        <td>{{{out}}}</td>
+                        <td><input type="text" placeholder="HH:mm" onchange="App.modules.category.search.schedule_all(this)"></td>
+                        <td><input type="text" name="monday_out"></td>
+                        <td><input type="text" name="tuesday_out"></td>
+                        <td><input type="text" name="wednesday_out"></td>
+                        <td><input type="text" name="thursday_out"></td>
+                        <td><input type="text" name="friday_out"></td>
+                        <td><input type="text" name="saturday_out"></td>
+                        <td><input type="text" name="sunday_out"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="9"><input type="submit" value="{{mod}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <br><br><br>
+            {{{schedule_behavior_note}}}
+        </div>
+        {{/tabs.schedule}}
+        {{#tabs.acl}}
+        <div id="tab_acl">
+            <form method="POST" data-ajax-callback="acl_on_add">
+                <input type="hidden" name="id">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{{allow}} / {{deny}}</th>
+                        <th>{{{module}}}</th>
+                        <th>{{{action}}}</th>
+                        <th>{{{action_filter_criteria}}}</th>
+                        <th>{{{action_filter_value}}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="add">
+                        <td><select name="allow"><option value="1">{{allow}}</option><option value="0">{{deny}}</option></select></td>
+                        <td><select name="module" onchange="App.modules.category.search.acl_on_module(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="module_action" disabled="disabled" onchange="App.modules.category.search.acl_on_action(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="action_filter_criteria" disabled="disabled" onchange="App.modules.category.search.acl_on_action_filter_criteria(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="action_filter_value" disabled="disabled"></select></td>
+                        <td><input type="submit" value="{{add}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form><br><br><br>
+            {{{acl_behavior_note_1}}}<br>
+            {{{acl_behavior_note_2}}}<br>
+            {{{acl_behavior_note_3}}}<br>
+            {{{acl_behavior_note_4}}}<br>
+            {{{acl_behavior_note_5}}}
+        </div>
+        {{/tabs.acl}}
+        {{#tabs.non_working_days}}
+        <div id="tab_non_working_days">
+            <form method="POST" data-ajax-callback="nwd_on_add">
+                <input type="hidden" name="id">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{{from}}</th>
+                        <th>{{{to}}}</th>
+                        <th>{{{comments}}}</th>
+                        <th>{{{action}}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="add">
+                        <td><input type="text" name="from" value="{{from_value}}"></td>
+                        <td><input type="text" name="to" value="{{to_value}}"></td>
+                        <td><textarea rows="5" cols="30" name="comments"></textarea></td>
+                        <td><input type="submit" value="{{add}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <div class="del_nwd">
+                <button type="button" class="ui-state-default ui-corner-all app-btn" onclick="App.modules.category.search.nwd_del_confirm($('#tab_non_working_days').find('form > input').val());">{{{del_nwd}}}</button>
+            </div>
+        </div>
+        {{/tabs.non_working_days}}
+    </div>
+</script>
+
+<script id="acl_tr" type="text/html">
+    {{#acl_data}}
+    <tr class="permission" data-id={{id}}>
+        <td>{{{allow}}}</td>
+        <td>{{{module}}}</td>
+        <td>{{{action}}}</td>
+        <td>{{{action_filter_criteria}}}</td>
+        <td>{{{action_filter_value_label}}}</td>
+        <td>{{#inherited_id}}{{{inherited_name}}}{{/inherited_id}}
+            {{^inherited_id}}
+            <button type="button" class="ui-state-default ui-corner-all app-btn" onclick="App.modules.category.search.acl_del_confirm($(this).closest('tr').data('id'))">{{del}}</button>
+            {{/inherited_id}}
+        </td>
+    </tr>
+    {{/acl_data}}
+</script>

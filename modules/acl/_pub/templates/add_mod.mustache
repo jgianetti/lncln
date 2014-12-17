@@ -1,0 +1,54 @@
+<script id="form" type="text/html">
+    <form  method="post" data-ajax-callback="on_submit" class="formuprop">
+        <fieldset>
+            <div>
+                <label for="name">Nombre</label><br /><br />
+                <input type="text" id="name" name="name" />
+            </div>
+
+            <div>
+                <label for="allow">Permitir</label><br /><br />
+                <select id="allow" name="allow">
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="module">M&oacute;dulo</label><br /><br />
+                <select id="module" name="module" onchange="App.modules.acl.add_mod.fill_action($(this));">
+                </select>
+            </div>
+
+            <div>
+                <label for="module_action">Acci&oacute;n</label><br /><br />
+                <select id="module_action" name="module_action" >
+                    <option value="*">Todos/as</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="filter_criteria">Filtar por</label><br /><br />
+                <select id="filter_criteria" name="filter_criteria">
+                    <option value=""></option>
+                    <option value="institucion">Instituci&oacute;n</option>
+                    <option value="provincia">Provincia</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="filter_value">Valor del filtro</label><br /><br />
+                <select id="filter_value" name="filter_value">
+                    <option value=""></option>
+                    <option value="self">Asociados/as al usuario</option>
+                </select>
+            </div>
+
+            <br /><br />
+            <div id="inenviagr">
+                <input type="submit" />
+            </div>
+
+        </fieldset>
+    </form>
+</script>

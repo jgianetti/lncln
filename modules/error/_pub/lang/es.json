@@ -1,0 +1,13 @@
+{
+    "win_title_search" : "Buscar Errores",
+    "win_title_list" : "Listado de Errores",
+    "win_title_clean" : "Eliminar Errores",
+
+    "date" : "Fecha",
+    "details" : "Detalles",
+
+    "not_found": "No se encontraron Errores",
+
+
+    "clean_error": "Ha ocurrido un error al eliminar los Errores"
+}

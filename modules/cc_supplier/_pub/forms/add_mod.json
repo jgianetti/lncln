@@ -1,0 +1,88 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "name",
+                        "id" : "cc-supplier-add-mod-name",
+                        "caption" : "cc_supplier.name",
+                        "placeholder" : "Label Inc.",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "address",
+                        "id" : "cc-supplier-add-mod-last-name",
+                        "caption" : "cc_supplier.address",
+                        "placeholder" : "ABC Street 1234",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "phone",
+                        "id" : "cc-supplier-add-mod-phone",
+                        "caption" : "cc_supplier.phone",
+                        "placeholder" : "1234-5678",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "file",
+                        "name" : "image",
+                        "id" : "cc-supplier-add-mod-image",
+                        "caption" : "cc_supplier.image"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "email",
+                        "name" : "email",
+                        "id" : "cc-supplier-add-mod-email",
+                        "caption" : "cc_supplier.email",
+                        "validate" : {
+                            "email" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "cc-supplier-add-mod-comments",
+                        "caption" : "cc_supplier.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

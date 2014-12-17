@@ -1,0 +1,33 @@
+{
+    "win_title_search" : "Buscar Movimientos",
+    "win_title_list" : "Listado de Movimientos",
+    "win_title_add" : "Registrar Movimiento",
+    "win_title_mod" : "Modificar Movimiento",
+    "win_title_entrance_select" : "Seleccionar entrada",
+    "win_title_del" : "Cancelar Movimiento",
+
+    "not_found": "No se encontraron movimientos",
+
+    "image": "Im&aacute;gen",
+    "date" : "Fecha",
+    "time" : "Hora",
+    "fullname" : "Apellido, Nombre",
+    "is_early" : "Turno",
+    "category" : "Categor&iacute;a",
+    "is_entering" : "Ingreso/Salida",
+    "entering" : "Ingreso",
+    "exiting" : "Salida",
+    "expected_time" : "Horario esperado",
+    "early" : "Antes de horario",
+    "late" : "Despu&eacute;s de horario",
+    "entrance" : "Acceso por",
+    "deleted" : "Cancelada",
+    "comments" : "Comentarios",
+
+    "mod_ok": "Movimiento modificado con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar el movimiento",
+
+    "del_confirm" : "&iquest;Desea cancelar el movimiento?",
+    "del_ok": "Movimiento cancelado con &eacute;xito",
+    "del_error": "Ha ocurrido un error al cancelar el movimiento"
+}

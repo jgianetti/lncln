@@ -1,0 +1,193 @@
+<script id="user" type="text/html">
+    <div class="actions">
+        <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/user/del?id={{user.id}}" data-ajax-callback="del" data-push-state="0"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>
+        <a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/user/mod?id={{user.id}}" data-ajax="1"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>
+    </div>
+    <div class="row-data" data-id="{{user.id}}">
+        <div class="avatar">
+            <img class="{{user.image_class}}" src="{{user.image_src}}" alt="avatar" />
+        </div>
+        <ul>
+            <li><span class="label">{{{name}}}:</span> {{user.last_name}}, {{user.name}}</li>
+            <li><span class="label">{{{dni}}}:</span> {{user.dni}}</li>
+            <li><span class="label">{{{barcode}}}:</span> {{user.id}}</li>
+            <li><span class="label">{{{category}}}:</span> {{user.cat_names}}</li>
+            <li><span class="label">{{{cc_category}}}:</span> {{user.cc_cat_names}}</li>
+            <li><span class="label">{{{comments}}}:</span> {{{user.comments}}}</li>
+            <li><span class="label">{{{deleted}}}:</span>
+                {{#user.deleted}} {{yes}} {{/user.deleted}}
+                {{^user.deleted}} {{no}} {{/user.deleted}}
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script id="tabs_script" type="text/html">
+    <div id="tabs">
+        <ul>
+            {{#tabs.schedule}}
+            <li><a href="#tab_schedule"><span>{{schedule}}</span></a></li>
+            {{/tabs.schedule}}
+            {{#tabs.acl}}
+            <li><a href="#tab_acl"><span>{{acl}}</span></a></li>
+            {{/tabs.acl}}
+            {{#tabs.movements}}
+            <li><a href="#tab_movements"><span>{{movements}}</span></a></li>
+            {{/tabs.movements}}
+            {{#tabs.non_working_days}}
+            <li><a href="#tab_non_working_days"><span>{{non_working_days}}</span></a></li>
+            {{/tabs.non_working_days}}
+            {{#tabs.absences}}
+            <li><a href="#tab_absences"><span>{{absences}}</span></a></li>
+            {{/tabs.absences}}
+            {{#tabs.cc_deliveries}}
+            <li><a href="#tab_cc_deliveries"><span>{{cc_deliveries}}</span></a></li>
+            {{/tabs.cc_deliveries}}
+        </ul>
+        {{#tabs.schedule}}
+        <div id="tab_schedule">
+            <form method="POST" data-ajax-callback="on_schedule">
+                <input type="hidden" name="id">
+                <table class="user-schedule">
+                    <thead>
+                    <tr>
+                        <th>{{{in_out}}}</th>
+                        <th>{{{every_day}}}</th>
+                        <th>{{{monday}}}</th>
+                        <th>{{{tuesday}}}</th>
+                        <th>{{{wednesday}}}</th>
+                        <th>{{{thursday}}}</th>
+                        <th>{{{friday}}}</th>
+                        <th>{{{saturday}}}</th>
+                        <th>{{{sunday}}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{{in}}}</td>
+                        <td><input type="text" placeholder="HH:mm" onchange="App.modules.user.view.schedule_all(this)"></td>
+                        <td><input type="text" name="monday_in" value="{{user.monday_in}}"></td>
+                        <td><input type="text" name="tuesday_in" value="{{user.tuesday_in}}"></td>
+                        <td><input type="text" name="wednesday_in" value="{{user.wednesday_in}}"></td>
+                        <td><input type="text" name="thursday_in" value="{{user.thursday_in}}"></td>
+                        <td><input type="text" name="friday_in" value="{{user.friday_in}}"></td>
+                        <td><input type="text" name="saturday_in" value="{{user.saturday_in}}"></td>
+                        <td><input type="text" name="sunday_in" value="{{user.sunday_in}}"></td>
+                    </tr>
+                    <tr>
+                        <td>{{{out}}}</td>
+                        <td><input type="text" placeholder="HH:mm" onchange="App.modules.user.view.schedule_all(this)"></td>
+                        <td><input type="text" name="monday_out" value="{{user.monday_out}}"></td>
+                        <td><input type="text" name="tuesday_out" value="{{user.tuesday_out}}"></td>
+                        <td><input type="text" name="wednesday_out" value="{{user.wednesday_out}}"></td>
+                        <td><input type="text" name="thursday_out" value="{{user.thursday_out}}"></td>
+                        <td><input type="text" name="friday_out" value="{{user.friday_out}}"></td>
+                        <td><input type="text" name="saturday_out" value="{{user.saturday_out}}"></td>
+                        <td><input type="text" name="sunday_out" value="{{user.sunday_out}}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="9"><input type="submit" value="{{save}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {{/tabs.schedule}}
+        {{#tabs.acl}}
+        <div id="tab_acl">
+            <form method="POST" data-ajax-callback="acl_on_add">
+                <input type="hidden" name="id">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{{allow}} / {{deny}}</th>
+                        <th>{{{module}}}</th>
+                        <th>{{{action}}}</th>
+                        <th>{{{action_filter_criteria}}}</th>
+                        <th>{{{action_filter_value}}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="add">
+                        <td><select name="allow"><option value="1">{{allow}}</option><option value="0">{{deny}}</option></select></td>
+                        <td><select name="module" onchange="App.modules.user.view.acl_on_module(this.value);"><option value="*">{{all}}</option></select></td>
+                        <td><select name="module_action" disabled="disabled" onchange="App.modules.user.view.acl_on_action(this.value);"><option value="*">{{all}}</option></select></td>
+                        <td><select name="action_filter_criteria" disabled="disabled" onchange="App.modules.user.view.acl_on_action_filter_criteria(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="action_filter_value" disabled="disabled"></select></td>
+                        <td><input type="submit" value="{{add}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form><br><br><br>
+            {{{acl_behavior_note_1}}}<br>
+            {{{acl_behavior_note_2}}}<br>
+            {{{acl_behavior_note_3}}}<br>
+            {{{acl_behavior_note_4}}}<br>
+            {{{acl_behavior_note_5}}}
+        </div>
+        {{/tabs.acl}}
+        {{#tabs.movements}}
+        <div id="tab_movements"></div>
+        {{/tabs.movements}}
+        {{#tabs.non_working_days}}
+        <div id="tab_non_working_days">
+            <form method="POST" data-ajax-callback="nwd_on_add">
+                <input type="hidden" name="user_id">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{{from}}</th>
+                        <th>{{{to}}}</th>
+                        <th>{{{comments}}}</th>
+                        <th>{{{action}}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="add">
+                        <td><input type="text" name="from" value="{{from_value}}"></td>
+                        <td><input type="text" name="to" value="{{to_value}}"></td>
+                        <td><textarea rows="5" cols="30" name="comments"></textarea></td>
+                        <td><input type="submit" value="{{add}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {{/tabs.non_working_days}}
+        {{#tabs.absences}}
+        <div id="tab_absences"></div>
+        {{/tabs.absences}}
+        {{#tabs.cc_deliveries}}
+        <div id="tab_cc_deliveries"></div>
+        {{/tabs.cc_deliveries}}
+    </div>
+</script>
+
+<script id="acl_tr" type="text/html">
+    {{#acl_data}}
+    <tr class="permission" data-id={{id}}>
+        <td>{{{allow}}}</td>
+        <td>{{{module}}}</td>
+        <td>{{{action}}}</td>
+        <td>{{{action_filter_criteria}}}</td>
+        <td>{{{action_filter_value_label}}}</td>
+        <td>{{#inherited_id}}{{{inherited_name}}}{{/inherited_id}}
+            {{^inherited_id}}
+                <button type="button" class="ui-state-default ui-corner-all app-btn" onclick="App.modules.user.view.acl_del_confirm($(this).closest('tr').data('id'))">{{del}}</button>
+            {{/inherited_id}}
+        </td>
+    </tr>
+    {{/acl_data}}
+</script>
+
+<script id="nwd_tr" type="text/html">
+    {{#nwd}}
+    <tr class="nwd" data-id={{id}}>
+        <td>{{{from}}}</td>
+        <td>{{{to}}}</td>
+        <td>{{{comments}}}</td>
+        <td><button type="button" class="ui-state-default ui-corner-all app-btn" onclick="App.modules.user.view.nwd_del_confirm($(this).closest('tr').data('id'))">{{del}}</button></td>
+    </tr>
+    {{/nwd}}
+</script>

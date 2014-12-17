@@ -1,0 +1,58 @@
+{
+    "win_title_search" : "Buscar Entregas",
+    "win_title_list" : "Listado de Entregas",
+    "win_title_view" : "Ver Entrega",
+    "win_title_add" : "Agregar Entrega",
+    "win_title_mod" : "Modificar Entrega",
+    "win_title_del" : "Eliminar Entrega",
+    "win_title_undel" : "Reactivar Entrega",
+
+    "not_found": "No se encontraron entregas",
+
+    "user_name" : "Usuario destinatario",
+    "opened_on" : "Fecha de inicio",
+    "opened_on_from" : "Inicio entre",
+    "opened_on_to" : "y",
+    "opened_by" : "Iniciada por",
+    "closed_on" : "Fecha de cierre",
+    "closed_on_from" : "Cierre entre",
+    "closed_on_to" : "y",
+    "closed_by" : "Cerrada por",
+    "cc_product_name" : "Producto",
+    "cc_category" : "Categor&iacute;a",
+
+    "by" : "por",
+    "comments" : "Comentarios",
+    "deleted" : "Eliminada",
+    "products" : "Productos",
+    
+    "image" : "Im&aacute;gen",
+    "name" : "Nombre",
+    "barcode_int" : "C&oacute;digo interno",
+    "barcode" : "C&oacute;digo",
+    "measurement_unit" : "Unidad de medida",
+    "unit_price" : "Precio unitario",
+    "quantity" : "Cantidad",
+    "subtotal" : "Subtotal",
+    "quantity_delivered" : "Cantidad entregada",
+    "total_price_delivered" : "Saldo entregado",
+    "total_cost" : "Costo total de la entrega",
+
+    "view_cc_purchase" : "ver compra",
+
+    "quantity_max" : "La cantidad no puede ser mayor al stock",
+
+    "save_ok": "Entrega guardada con &eacute;xito",
+    "save_error": "Ha ocurrido un error al guardar la entrega",
+    "add_ok": "Entrega agregada con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar la entrega",
+    "mod_ok": "Entrega modificada con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar la entrega",
+    "view_title" : "Ver entrega",
+    "del_confirm" : "&iquest;Desea eliminar la entrega?",
+    "del_ok": "Entrega eliminada con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar la entrega",
+    "undel_confirm" : "&iquest;Desea reactivar la entrega?",
+    "undel_ok": "Entrega reactivada con &eacute;xito",
+    "undel_error": "Ha ocurrido un error al reactivar la entrega"
+}

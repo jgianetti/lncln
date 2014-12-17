@@ -1,0 +1,35 @@
+/**********************************
+
+Use: cmxform template
+
+***********************************/
+form.cmxform fieldset {
+	margin-bottom: 20px;
+}
+
+form.cmxform label {
+	display: inline-block;
+	line-height: 1.8;
+	vertical-align: top;
+	cursor: hand;
+}
+
+form.cmxform fieldset p {
+	list-style: none;
+	padding: 5px;
+	margin: 0;
+}
+
+form.cmxform fieldset fieldset {
+	border: none;
+	margin: 3px 0 0;
+}
+
+form.cmxform fieldset fieldset label {
+	display: inline-block;
+	width: auto;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+/*\*//*/ form.cmxform legend { display: inline-block; } /* IE Mac legend fix */

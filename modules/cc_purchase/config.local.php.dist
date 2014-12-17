@@ -1,0 +1,21 @@
+<?php
+return [
+    'mailer' => [
+        // status = To Approve
+        0 => [
+            'subject' => '[LINCOLN - SISTEMA - ACCESO] CopyCenter - Nueva Compra para aprobar',
+            'body' => 'Ingresando en la siguiente dirección podrá aprobar la compra: ',
+            'recipients' => [
+                [ 'name' => 'Claudio Secchi', 'email' => 'claudio.secchi@lincoln.edu.ar'],
+            ],
+        ],
+        // status = To Close
+        1 => [
+            'subject' => '[LINCOLN - SISTEMA - ACCESO] CopyCenter - Nueva Compra aprobada para finalizar',
+            'body' => 'Ingresando en la siguiente dirección podrá cerrar la compra: ',
+            'recipients' => [
+                [ 'name' => 'Claudio Secchi', 'email' => 'claudio.secchi@lincoln.edu.ar'],
+            ],
+        ],
+    ]
+];

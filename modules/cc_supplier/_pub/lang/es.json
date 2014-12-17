@@ -1,0 +1,31 @@
+{
+    "win_title_search" : "Buscar Proveedores",
+    "win_title_list" : "Listado de Proveedores",
+    "win_title_view" : "Ver Proveedor",
+    "win_title_add" : "Agregar Proveedor",
+    "win_title_mod" : "Modificar Proveedor",
+    "win_title_del" : "Eliminar Proveedor",
+    "win_title_purchase_search" : "Buscar Compras",
+    "win_title_purchase_list" : "Listado de Compras",
+
+    "not_found": "No se encontraron proveedores",
+
+    "name": "Nombre",
+    "address" : "Direcci&oacute;n",
+    "phone": "Tel&eacute;fono",
+    "email": "Email",
+    "comments": "Comentarios",
+    "image": "Im&aacute;gen",
+    "image_delete" : "Eliminar im&aacute;gen actual",
+    "deleted" : "Eliminado",
+
+    "image_error" : "Ha ocurrido un error al guardar la im&aacute;gen",
+
+    "add_ok": "Proveedor agregado con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar el proveedor",
+    "mod_ok": "Proveedor modificado con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar el proveedor",
+    "del_confirm": "&iquest;Desea eliminar el proveedor?",
+    "del_ok": "Proveedor eliminado con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar el proveedor"
+}

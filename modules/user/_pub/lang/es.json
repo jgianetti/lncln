@@ -1,0 +1,101 @@
+{
+    "win_title_login" : "Iniciar Sesi&oacute;n",
+    "win_title_search" : "Buscar Usuarios",
+    "win_title_list" : "Listado de Usuarios",
+    "win_title_view" : "Ver Usuario",
+    "win_title_info" : "Informaci&oacute;n sobre",
+    "win_title_add" : "Agregar Usuario",
+    "win_title_mod" : "Modificar Usuario",
+    "win_title_del" : "Eliminar Usuario",
+    "win_title_set_all" : "Modificar Usuarios Filtrados",
+
+    "not_found": "No se encontraron usuarios",
+    "login_not_found" : "Usuario y/o contrase&ntilde;a inexistentes",
+    "login_ok" : "Ha iniciado sesi&oacute;n con &eacute;xito",
+
+    "image": "Im&aacute;gen",
+    "barcode" : "C&oacute;digo de Barras",
+    "user" : "Usuario",
+    "pwd" : "Contrase&ntilde;a",
+    "pwd_old" : "Contrase&ntilde;a anterior",
+    "email" : "Email",
+    "email_desc" : "Direcci&oacute;n v&aacute;lida",
+    "name" : "Nombre",
+    "last_name" : "Apellido",
+    "fullname": "Apellido, Nombre",
+    "dni" : "Dni",
+    "card": "Tarjeta",
+    "category": "Categor&iacute;a",
+    "cc_category": "Categor&iacute;a CopyCenter",
+    "file_number" : "Legajo",
+    "image_delete" : "Eliminar im&aacute;gen actual",
+    "in_school" : "Dentro de la escuela",
+    "homepage" : "Pagina de inicio",
+    "comments" : "Comentarios",
+    "rfid" : "Llavero",
+    "deleted" : "Eliminado",
+
+    "all_in" : "Todos In",
+    "all_out" : "Todos Out",
+    "set_all_ok" : "Usuarios modificados con &eacute;xito",
+
+    "image_error" : "Ha ocurrido un error al guardar la im&aacute;gen",
+    "pwd_old_error" : "La contrase&ntilde;a anterior es incorrecta",
+
+    "add_ok": "Usuario agregado con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar el usuario",
+    "mod_ok": "Usuario modificado con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar el usuario",
+    "del_confirm": "&iquest;Desea eliminar el usuario?",
+    "del_ok": "Usuario eliminado con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar los usuarios",
+
+
+    "schedule" : "Horarios",
+    "every_day" : "Todos los d&iacute;as",
+    "in": "Ingreso",
+    "out": "Salida",
+
+
+    "acl" : "Permisos",
+    "allow" : "Permitir",
+    "deny" : "Denegar",
+    "module" : "M&oacute;dulo",
+    "action" : "Acci&oacute;n",
+    "action_filter_criteria" : "Filtrar acci&oacute;n",
+    "action_filter_value"  : "Valor del filtro",
+    "inherited" : "Heredados",
+
+    "all" : "Todos",
+    "self" : "Usuario en cuesti&oacute;n",
+    "category_id" : "Categor&iacute;a",
+    "cc_supplier_id" : "Proveedor",
+    "opened_by" : "Iniciada por",
+    "acl_del" : "Eliminar permiso",
+
+    "acl_behavior_note_1" : "Un permiso no declarado expl&iacute;citamente como 'permitido' se considera denegado.",
+    "acl_behavior_note_2" : "Resulta m&aacute;s sencillo administrar permisos por categor&iacute;as. Ej: Creando una categor&iacute;a 'Permisos' con subcategor&iacute;as 'Admins', 'Guardia', 'CopyCenter', etc.",
+    "acl_behavior_note_3" : "Se recomienda otorgar los permisos de la manera m&aacute;s espec&iacute;fica posible:",
+    "acl_behavior_note_4" : " &nbsp; Resulta m&aacute;s sencillo  si cada usuario hereda sus permisos de una sola categor&iacute;a. Aunque esto implique crear m&aacute;s categor&iacute;as.",
+    "acl_behavior_note_5" : " &nbsp; Si se desea que un usuario tenga acceso a la mitad de los m&oacute;dulos, se puede otorgarle permisos para 'todos' y denegarle la mitad; u otorgarle permisos solo para la otra mitad. Esta &uacute;ltima opci&oacute;n es la recomendada.",
+
+    "acl_del_confirm": "&iquest;Desea eliminar el permiso?",
+    "acl_del_error": "Ha ocurrido un error al eliminar el permiso",
+
+
+    "movements" : "Movimientos",
+
+
+    "non_working_days" : "Dias no laborales",
+    "from" : "Desde",
+    "to" : "Hasta",
+
+    "nwd_del_confirm": "&iquest;Desea eliminar el rango de d&iacute;as no laborales?",
+    "nwd_del_error": "Ha ocurrido un error al eliminar el rango de d&iacute;as no laborales",
+
+
+    "absences" : "Inasistencias",
+
+
+    "cc_deliveries" : "Pedidos al CopyCenter"
+}

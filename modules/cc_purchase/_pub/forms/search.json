@@ -1,0 +1,143 @@
+{
+    "action" : "search",
+    "method" : "get",
+    "class" : "cmxform search",
+    "data-ajax-callback" : "paginate",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "order_num",
+                            "id" : "cc-purchase-search-order-num",
+                            "caption" : "cc_purchase.order_num",
+                            "placeholder" : "123456"
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "opened_on_from",
+                            "id" : "cc-purchase-search-opened-on-from",
+                            "caption" : "cc_purchase.opened_on_from",
+                            "placeholder" : "01/01/2013",
+                            "datepicker" : {
+                                "dateFormat" : "dd/mm/yy"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "opened_on_to",
+                            "id" : "cc-purchase-search-opened-on-to",
+                            "caption" : "cc_purchase.opened_on_to",
+                            "placeholder" : "01/01/2014",
+                            "datepicker" : {
+                                "dateFormat" : "dd/mm/yy"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "closed_on_from",
+                            "id" : "cc-purchase-search-closed-on-from",
+                            "caption" : "cc_purchase.closed_on_from",
+                            "placeholder" : "01/01/2013",
+                            "datepicker" : {
+                                "dateFormat" : "dd/mm/yy"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "closed_on_to",
+                            "id" : "cc-purchase-search-closed-on-to",
+                            "caption" : "cc_purchase.closed_on_to",
+                            "placeholder" : "01/01/2014",
+                            "datepicker" : {
+                                "dateFormat" : "dd/mm/yy"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "cc_product_name",
+                            "id" : "cc-purchase-search-cc-product-name",
+                            "caption" : "cc_purchase.cc_product_name",
+                            "autocomplete" : {
+                                "minLength": 4
+                            }
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "cc_product_id"
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "cc_supplier_name",
+                            "id" : "cc-purchase-search-cc-supplier-name",
+                            "caption" : "cc_purchase.cc_supplier_name",
+                            "autocomplete" : {
+                                "minLength": 3
+                            }
+                        },
+                        {
+                            "type": "hidden",
+                            "name": "cc_supplier_id"
+                        }
+                    ]
+                },
+                {
+                    "type" : "fieldset",
+                    "html" : [
+                        {
+                            "type" : "p",
+                            "html" : [{
+                                "type" : "checkbox",
+                                "name" : "deleted",
+                                "id" : "cc-purchase-search-deleted",
+                                "value" : "1",
+                                "caption" : "cc_purchase.deleted"
+                            }]
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit",
+                        "value" : "buscar"
+                    }]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+<script id="user" type="text/html">
+    {{^_data}}
+    {{not_found}}
+    {{/_data}}
+    {{#_data}}
+    <ul class="row-data">
+        <li>
+            <div class="actions">
+                <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/user/del?id={{user.id}}" data-ajax-callback="del" data-push-state="0"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>
+                <a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/user/mod?id={{user.id}}" data-ajax="1"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>
+            </div>
+            <div class="image">
+                <img class="{{user.in_school_txt}}" src="{{user.image_src}}" alt="avatar" />
+            </div>
+            <div class="fields">
+                <ul>
+                    <li><span class="label">{{{name}}}:</span> {{user.last_name}}, {{user.name}}</li>
+                    <li><span class="label">{{{dni}}}:</span> {{user.dni}}</li>
+                    <li><span class="label">{{{barcode}}}:</span> {{user.id}}</li>
+                    <li><span class="label">{{{category}}}:</span> {{user.category_name}}</li>
+                    <li><span class="label">{{{cc_category}}}:</span> {{user.cc_category_name}}</li>
+                    <li><span class="label">{{{comments}}}:</span> {{{user.comments}}}</li>
+                    <li><span class="label">{{{deleted}}}:</span>
+                        {{#user.deleted}} {{yes}} {{/user.deleted}}
+                        {{^user.deleted}} {{no}} {{/user.deleted}}
+                    </li>
+                </ul>
+            </div>
+            <br class="clr">
+        </li>
+    </ul>
+    {{/_data}}
+</script>
+
+<script id="cc_delivery_list" type="text/html">
+    {{^paginator.total_pages}}
+    {{not_found}}
+    {{/paginator.total_pages}}
+    {{#paginator.total_pages}}
+    <table class="cc-delivery-search">
+        <thead>
+        <tr class="paginator">
+            <th colspan="7">
+                <div class="jpaginator"></div>
+            </th>
+        </tr>
+        <tr>
+            <th>{{{user_name}}}</th>
+            <th>{{{opened_on}}}</th>
+            <th>{{{opened_by}}}</th>
+            <th>{{{closed_on}}}</th>
+            <th>{{{closed_by}}}</th>
+            <th>{{{products}}}</th>
+            <th class="action">{{{del}}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#cc_deliveries}}
+        <tr>
+            <td><a href="{{url_base}}/user/view?id={{user_id}}" title="{{view_user}}">{{user_name}}</a></td>
+            <td><a href="{{url_base}}/cc_delivery/view?id={{id}}" title="{{view_cc_delivery}}">{{opened_on}}</a></td>
+            <td><a href="{{url_base}}/user/view?id={{opened_by}}" title="{{view_user}}">{{opened_by_name}}</a></td>
+            <td><a href="{{url_base}}/cc_delivery/view?id={{id}}" title="{{view_cc_delivery}}">{{closed_on}}</a></td>
+            <td><a href="{{url_base}}/user/view?id={{closed_by}}" title="{{view_user}}">{{closed_by_name}}</a></td>
+            <td>
+                <ul>
+                    {{#products}}
+                    <li><span class="label"><a href="{{url_base}}/cc_product/view?id={{id}}" title="{{view_cc_product}}">{{name}}</a>:</span>
+                        {{quantity}} {{unit}} {{measurement_unit}}, ${{unit_price}} {{each}}
+                        <a href="{{url_base}}/cc_purchase/view?id={{cc_purchase_id}}" title="{{view_cc_purchase}}">({{view_cc_purchase}})</a>
+                    </li>
+                    {{/products}}
+                    <li><span class="label">{{total_cost}}:</span> ${{total}}</li>
+                </ul>
+            </td>
+            <td><a href="{{url_base}}/cc_delivery/del?id={{id}}" title="{{del}}" data-push-state="0" data-ajax-callback="del">{{del}}</a></td>
+        </tr>
+        {{/cc_deliveries}}
+        </tbody>
+    </table>
+    {{/paginator.total_pages}}
+</script>

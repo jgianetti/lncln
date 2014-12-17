@@ -1,0 +1,23 @@
+{
+    "win_title_search" : "Buscar Inasistencias",
+    "win_title_list" : "Listado de Inasistencias",
+    "win_title_mod" : "Modificar Inasistencia",
+    "win_title_del" : "Eliminar Inasistencia",
+
+    "not_found": "No se encontraron inasistencias",
+
+    "image": "Im&aacute;gen",
+    "date" : "Fecha",
+    "fullname" : "Appelido, Nombre",
+    "category" : "Categor&iacute;a",
+    "cc_category" : "Categor&iacute;a Copycenter",
+    "email" : "Email",
+    "comments" : "Comentarios",
+
+    "mod_ok": "Inasistencia modificada con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar la inasistencia",
+
+    "del_confirm" : "&iquest;Desea eliminar la inasistencia?",
+    "del_ok": "Inasistencia eliminada con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar la inasistencia"
+}

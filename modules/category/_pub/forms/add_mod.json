@@ -1,0 +1,51 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                            "type" : "text",
+                            "name" : "parent_category",
+                            "id" : "category-add-mod-parent-category",
+                            "caption" : "category.parent_category",
+                            "disabled" : true
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "name",
+                        "id" : "category-add-mod-name",
+                        "caption" : "category.name",
+                        "placeholder" : "Security",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "category-add-mod-comments",
+                        "caption" : "category.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

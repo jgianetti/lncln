@@ -1,0 +1,88 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "hidden",
+            "name" : "user_id"
+        },
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "user_name",
+                        "id" : "cc-delivery-add-mod-user-name",
+                        "caption" : "cc_delivery.user_name",
+                        "autocomplete" : {
+                            "minLength": 2
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "opened_on",
+                        "id" : "cc-delivery-add-mod-opened-on",
+                        "caption" : "cc_delivery.opened_on",
+                        "placeholder" : "01/01/2013",
+                        "datepicker" : {
+                            "dateFormat" : "dd/mm/yy"
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "closed_on",
+                        "id" : "cc-delivery-add-mod-closed-on",
+                        "caption" : "cc_delivery.closed_on",
+                        "placeholder" : "01/01/2013",
+                        "datepicker" : {
+                            "dateFormat" : "dd/mm/yy"
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [
+                        {
+                            "type" : "text",
+                            "name" : "cc_product_name",
+                            "id" : "cc-delivery-add-mod-cc-product-name",
+                            "caption" : "cc_delivery.products",
+                            "autocomplete" : {
+                                "minLength": 3
+                            }
+                        },
+                        {
+                            "type" : "div",
+                            "name" : "products"
+                        }
+                    ]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "cc-delivery-add-mod-comments",
+                        "caption" : "cc_delivery.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "user_name",
+                        "caption" : "rfid.fullname",
+                        "id" : "rfid-add-mod-fullname",
+                        "disabled" : "1"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "div",
+                        "id" : "rfid-add-mod-image"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "date",
+                        "id" : "rfid-add-mod-date",
+                        "caption" : "rfid.date",
+                        "disabled" : "1"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "rfid-add-mod-comments",
+                        "caption" : "rfid.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

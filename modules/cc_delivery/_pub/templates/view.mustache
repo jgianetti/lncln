@@ -1,0 +1,59 @@
+<script id="cc_delivery" type="text/html">
+    <div class="actions">
+        <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/cc_delivery/del?id={{cc_delivery.id}}" data-push-state="0" data-ajax-callback="del"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>
+    </div>
+    <div class="row-data">
+        <ul>
+            <li><span class="label">{{{user_name}}}:</span> <a href="{{url_base}}/user/view?id={{cc_delivery.user_id}}" title="{{view_user}}">{{cc_delivery.user_name}}</a></li>
+            <li><span class="label">{{{opened_on}}}:</span> {{cc_delivery.opened_on}}</li>
+            <li><span class="label">{{{opened_by}}}:</span> <a href="{{url_base}}/user/view?id={{cc_delivery.opened_by}}" title="{{view_user}}">{{cc_delivery.opened_by_name}}</a></li>
+            <li><span class="label">{{{closed_on}}}:</span> {{cc_delivery.opened_on}}</li>
+            <li><span class="label">{{{closed_by}}}:</span> <a href="{{url_base}}/user/view?id={{cc_delivery.closed_by}}" title="{{view_user}}">{{cc_delivery.closed_by_name}}</a></li>
+            <li><span class="label">{{{comments}}}:</span> {{{cc_delivery.comments}}}</li>
+            <li><span class="label">{{{products}}}:</span>
+                <table class="app-table td-first-image">
+                    <thead>
+                    <tr>
+                        <th>{{{image}}}</th>
+                        <th>{{{name}}}</th>
+                        <th>{{{barcode_int}}}</th>
+                        <th>{{{barcode}}}</th>
+                        <th>{{{measurement_unit}}}</th>
+                        <th>{{unit_price}}</th>
+                        <th>{{quantity_delivered}}</th>
+                        <th>{{subtotal}}</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#cc_delivery.products}}
+                    <tr data-id="{{id}}">
+                        <td>
+                            {{#_image}}
+                            <img src="{{url_base}}/_pub/img/cc_product/{{id}}.png">
+                            {{/_image}}
+                            {{^_image}}
+                            <img src="{{url_base}}/_pub/img/cc_product/not_found.jpg">
+                            {{/_image}}
+                        </td>
+                        <td><a href="{{url_base}}/cc_product/view?id={{id}}" title="{{view_cc_product}}">{{name}}</a></td>
+                        <td>{{deposit}}{{family}}{{item}}{{brand}}{{size}}{{color}}</td>
+                        <td>{{barcode}}</td>
+                        <td>{{measurement_unit}}</td>
+                        <td>${{unit_price}}</td>
+                        <td>{{quantity}}</td>
+                        <td>${{subtotal}}</td>
+                        <td><a href="{{url_base}}/cc_purchase/view?id={{cc_purchase_id}}" title="{{view_cc_purchase}}">{{view_cc_purchase}}</a></td>
+                    </tr>
+                    {{/cc_delivery.products}}
+                    </tbody>
+                </table>
+            </li>
+            <li><span class="label">{{total_cost}}:</span> ${{cc_delivery._total}}</li>
+            <li><span class="label">{{{deleted}}}:</span>
+                {{#cc_delivery.deleted}} {{yes}} {{/cc_delivery.deleted}}
+                {{^cc_delivery.deleted}} {{no}} {{/cc_delivery.deleted}}
+            </li>
+        </ul>
+    </div>
+</script>

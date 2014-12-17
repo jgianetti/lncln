@@ -1,0 +1,34 @@
+<?php
+/*
+ * ENVIROMENT
+ * development | production
+ */
+const APP_ENV = APP_ENV_DEV;
+
+/**
+ * DATABASE
+ */
+$cfg['db']['dsn']   = 'mysql:dbname=**********;host=**********';
+$cfg['db']['dbu']   = '';
+$cfg['db']['dbp']   = '';
+
+/*
+ * SMTP
+ */
+$cfg['smtp']['host']        = '';
+$cfg['smtp']['secure']      = ''; // ssl
+$cfg['smtp']['port']        = 465;
+$cfg['smtp']['auth']        = true;
+$cfg['smtp']['user']        = '';
+$cfg['smtp']['pwd']         = '';
+$cfg['smtp']['from']        = '';
+$cfg['smtp']['from_name']   = '';
+$cfg['smtp']['charset']     = 'UTF-8';
+
+// HTTP_HOST[/URL_BASE][/REQUEST_URL]
+$cfg['url_base']    = '';
+
+/*
+ * SESSION ENCRYPTION KEY
+ */
+$cfg['session_key'] = '************';

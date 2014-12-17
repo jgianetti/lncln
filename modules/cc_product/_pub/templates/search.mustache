@@ -1,0 +1,42 @@
+<script id="list" type="text/html">
+    {{^paginator.total_pages}}
+        {{not_found}}
+    {{/paginator.total_pages}}
+    {{#paginator.total_pages}}
+        <table class="cc-product-search td-first-image">
+            <thead>
+            <tr class="paginator">
+                <th colspan="8">
+                    <div class="jpaginator"></div>
+                </th>
+            </tr>
+            <tr>
+                <th>{{{image}}}</th>
+                <th>{{{name}}}</th>
+                <th>{{{barcode_int}}}</th>
+                <th>{{{barcode}}}</th>
+                <th>{{{measurement_unit}}}</th>
+                <th>{{{stock}}}</th>
+                <th>{{{stock_price}}}</th>
+                <th class="action">{{{mod}}}</th>
+                <th class="action">{{{del}}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#cc_products}}
+            <tr>
+                <td><img src="{{image_src}}"></td>
+                <td><a href="{{url_base}}/cc_product/view?id={{id}}" title="{{view_cc_product}}">{{name}}</a></td>
+                <td>{{deposit}}{{family}}{{item}}{{brand}}{{size}}{{color}}</td>
+                <td>{{barcode}}</td>
+                <td>{{measurement_unit}}</td>
+                <td>{{stock}}</td>
+                <td>${{stock_price}}</td>
+                <td><a href="{{url_base}}/cc_product/mod?id={{id}}" title="{{mod}}">{{mod}}</a></td>
+                <td><a href="{{url_base}}/cc_product/del?id={{id}}" title="{{del}}" data-push-state="0" data-ajax-callback="del">{{del}}</a></td>
+            </tr>
+            {{/cc_products}}
+            </tbody>
+        </table>
+    {{/paginator.total_pages}}
+</script>

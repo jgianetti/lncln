@@ -1,0 +1,56 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "user_name",
+                        "caption" : "user_absence.fullname",
+                        "id" : "user-absence-add-mod-fullname",
+                        "disabled" : "1"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "div",
+                        "id" : "user-absence-add-mod-image"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "date",
+                        "id" : "user-absence-add-mod-date",
+                        "caption" : "user_absence.date",
+                        "datepicker" : {
+                            "dateFormat" : "dd/mm/yy"
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "user-absence-add-mod-comments",
+                        "caption" : "user_absence.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

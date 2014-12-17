@@ -1,0 +1,34 @@
+<script id="cc_product" type="text/html">
+    <div class="actions">
+        <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/cc_product/del?id={{cc_product.id}}"><span class="ui-icon ui-icon-closethick" data-push-state="0" data-ajax-callback="del">{{del}}</span></a>
+        <a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/cc_product/mod?id={{cc_product.id}}"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>
+    </div>
+    <div class="row-data" data-id="{{cc_product.id}}">
+        <div class="avatar">
+            <img src="{{cc_product.image_src}}" alt="image" />
+        </div>
+        <ul>
+            <li><span class="label">{{{name}}}:</span> {{cc_product.name}}</li>
+            <li><span class="label">{{{barcode_int}}}:</span> {{cc_product.deposit}}{{cc_product.family}}{{cc_product.item}}{{cc_product.brand}}{{cc_product.size}}{{cc_product.color}}</li>
+            <li><span class="label">{{{barcode}}}:</span> {{cc_product.barcode}}</li>
+            <li><span class="label">{{{measurement_unit}}}:</span> {{{cc_product.measurement_unit}}}</li>
+            <li><span class="label">{{{stock}}}:</span> {{cc_product.stock}}</li>
+            <li><span class="label">{{{stock_price}}}:</span> ${{cc_product.stock_price}}</li>
+            <li><span class="label">{{{comments}}}:</span> {{{cc_product.comments}}}</li>
+            <li><span class="label">{{{deleted}}}:</span>
+                {{#cc_product.deleted}} {{yes}} {{/cc_product.deleted}}
+                {{^cc_product.deleted}} {{no}} {{/cc_product.deleted}}
+            </li>
+        </ul>
+    </div>
+</script>
+<script id="tabs_script" type="text/html">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab_cc_purchases"><span>{{cc_purchases}}</span></a></li>
+            <li><a href="#tab_cc_deliveries"><span>{{cc_deliveries}}</span></a></li>
+        </ul>
+        <div id="tab_cc_purchases" style="overflow: hidden;"></div>
+        <div id="tab_cc_deliveries" style="overflow: hidden;"></div>
+    </div>
+</script>

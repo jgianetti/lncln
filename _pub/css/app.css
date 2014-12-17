@@ -1,0 +1,281 @@
+/** RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, input, select, textarea,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box; /* css3 rec */
+    -moz-box-sizing: border-box; /* ff2 */
+    -ms-box-sizing: border-box; /* ie8 */
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section { display: block;}
+body { line-height: 1;}
+ol, ul { list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}
+table {border-collapse: collapse;border-spacing: 0;}
+/** --- /RESET --- */
+
+
+/** --- GENERIC --- */
+html, body { height: 100% }
+body{font-family: arial,sans-serif; font-size: .6em; }
+
+/* h1 {font-size: 2em;} h2 {font-size: 1.5em;} h3 {font-size: 1.17em;} h5 {font-size: .83em;} h6 {font-size: .75em;} */
+h1 {font-size: 1.1em;} h2 {font-size: 1em;} h3 {font-size: .9em;} h5 {font-size: .8em;} h6 {font-size: .7em;}
+a:link, a:visited, a:active {text-decoration:none;}
+a:hover{text-decoration: underline;}
+a { color: #555; }
+br.clr {clear:both;height:1px;font-size:1px;border:none;margin:0;padding:0;background:transparent;}
+.float-container {overflow: hidden;}
+
+/** --- LOADING MODAL -- */
+div.loading-modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .7 )
+    url('images/app-loading_32x32.gif')
+    50% 50%
+    no-repeat;
+}
+body.loading .loading-modal { display: block; }
+/** --- /LOADING MODAL -- */
+
+#cache { display: none; }
+div[name=del-confirm] p { margin-bottom: 1em;}
+
+/** A/Buttons */
+.app-btn {
+   outline: 0;
+   margin: .1em;
+   padding: .2em;
+   position: relative;
+   text-decoration:none !important;
+   cursor:pointer; 
+   text-align: center; 
+}
+
+
+/** Forms */
+form h1 { font-weight: bold; border-bottom: 1px solid #000;}
+input, select, textarea { padding: .3em; }
+input, select, textarea{border: 1px solid #ccc;}
+input:hover, select:hover, textarea:hover{background-color: #fafaff;}
+input:focus, select:focus, textarea:focus{background-color: #f5f5ff;}
+input.error { border: 1px dotted red; }
+
+form.cmxform label { width: 250px; }
+form.cmxform label.error { margin-left: 3px; }
+form.cmxform fieldset fieldset { margin-left: 253px; } /* Width plus 3 (html space) */
+form.cmxform input[type="submit"] { margin-left: 253px; }
+
+form.search label { width: 150px; }
+form.search fieldset fieldset { margin-left: 153px; } /* Width plus 3 (html space) */
+form.search fieldset p { padding: 0px; }
+
+input.date_range_filter { width: 7em; }
+
+.ui-autocomplete-loading { background: white url('images/app-loading_16x16.gif') right center no-repeat; }
+.ui-autocomplete-checked { background: white url('images/app-check_16x16.gif') right center no-repeat; }
+.ui-autocomplete-item img {height: 4em; width: 4em; float:left;}
+.ui-autocomplete-item p.label span.match {font-weight: bold; color: blue;}
+.ui-autocomplete-item p.desc {font-size: .7em; font-style: italic;}
+
+
+/** Tables */
+
+table {width:100%; border: 1px solid #ccc;}
+table th { padding: .2em; vertical-align: middle; border-bottom: 2px solid #ccc; border-left: 1px dashed #ccc;}
+table td { text-align: center; border-bottom: 1px solid #ccc; border-left: 1px dashed #ccc;}
+table th:first-child, table td:first-child { border-left: 1px solid #ccc;}
+table th.action { width: 10em;}
+table td { vertical-align: middle; }
+table tbody td a {display: block; padding: .6em .5em;}
+table tbody td:first-child {text-align: left; }
+
+table tbody td ul { margin: 0; padding: 0; text-align: left; font-size: .8em; }
+table tbody td ul li { padding: .2em; border-bottom: 1px solid #ccc; }
+table tbody td ul li:last-child { border-bottom: 0; }
+table tbody td ul li span.label { font-size: 1.2em; font-weight: bold; }
+table tbody td ul li.total { text-align: right; }
+table tbody td ul li a { display: inline; }
+
+table.td-first-image td:first-child { text-align: center; }
+table.td-first-image tbody td:first-child img { width: 2.7em; height: 2.7em; }
+table.td-first-image tbody td:nth-child(2) { text-align: left; }
+
+table tfoot.total th:first-child { text-align: center; }
+table tfoot.total th { text-align: right; }
+
+table .app-btn { display: inline-block; }
+
+.app-table tr:nth-child(even) { background-color: #f8f8f8; }
+
+
+/** --- /GENERIC --- */
+
+
+/** --- SPECIFIC --- */
+/** Header */
+#container { min-height:100%; position:relative; }
+
+#header h1 {
+    height: 1.5em;
+    padding: .2em;
+    border-bottom: 1px solid #000;
+    font-size: 1.3em;
+    color: #335;
+    letter-spacing: .2em;
+    background:transparent url('images/app-nb_bg.jpg') repeat-x top;
+}
+
+/** NavBar */
+nav {padding: .2em 0 .2em; border-bottom: 1px solid #444;}
+nav span.user-name { float:right; margin-left: .5em; padding: .6em; font-weight: bold; border-left: 2px solid #ccc; }
+nav a:hover { text-decoration: none; }
+nav>ul.module {float:left;}
+nav>ul.action {float:right;}
+nav>ul>li {float:left;-moz-border-radius: 3px; border-radius: 3px; border: 1px dashed transparent;}
+nav>ul>li:hover{-moz-border-radius: 3px; border-radius: 3px; border: 1px solid #aaa; box-shadow: 2px 2px 3px #aaaaaa; }
+nav>ul ul {display: none; border: 1px solid #aaa; }
+nav li a {display: block; padding: .5em; color: #222; }
+nav li:hover>ul{display: block; position: absolute; box-shadow: 2px 2px 3px #aaaaaa; z-index: 1000;}
+nav li:hover li a {background-color: #fff; }
+nav li li a {padding: .5em 2em; color: #222; }
+nav li li a:hover {background-color: #fafafa;}
+nav li li:hover ul{margin: -2em 0 0 10.1em;}
+
+/** Content */
+div#main {min-width:100%; min-height: 90em; }
+
+/** App Window */
+div.app-window-header { background-color: #EFF2F9;}
+div.app-window-header > h1 { float: left; padding: .5em; letter-spacing: .5em; }
+div.app-window-header > .app-window-minimize { float:right; }
+div.app-window-content {
+    padding: .2em;
+    background-color: #fff;
+}
+div.app-window-content .actions .app-btn {float:right;}
+
+div.app-window-errors > .app-window-content { min-height: 3em; overflow: auto; }
+
+div.row-data, div.row-data ul {overflow: hidden; }
+div.row-data ul > li { border-bottom: 1px dashed #ccc; }
+div.row-data li { padding: .5em; }
+div.row-data .label { display: inline-block; width: 13em; padding-right: 1em; font-weight: bold; text-align: right; }
+div.row-data .avatar { float: left; margin-right: 1em; }
+div.row-data .avatar img { width: 200px; }
+
+#app-window-user-view div.row-data .label { width: 15em; }
+#app-window-cc-product-view div.row-data .label { width: 15em; }
+
+div.rfid-add-entrance-select {
+    text-align: center;
+    font-size: 2em;
+}
+div.rfid-add-entrance-select button {
+    margin: .5em 1em;
+}
+div.rfid-add-code {
+    font-size: 5em;
+    padding: .2em .8em;
+    min-height: 1.4em;
+    font-weight: bold;
+}
+table.rfid-add-list tr.cancelled {
+    background-color: #ffeeee;
+}
+
+
+.category-schedule td, .user-schedule td {
+    padding: .2em;
+}
+
+.category-schedule td:first-child, .user-schedule td:first-child {
+    width: 8em;
+    text-align: right;
+    padding-right: 1em;
+}
+.category-schedule tr:nth-child(-n+2) input, .user-schedule tr:nth-child(-n+2) input {
+    width: 5em;
+}
+
+#tab_acl table td { width: 16%; height: 2em;}
+#tab_acl table td:first-child { text-align: center; }
+
+#tab_non_working_days table td:first-child { text-align: center; }
+#tab_non_working_days > .del_nwd { margin: .5em; text-align: center; }
+#tab_non_working_days > .del_nwd button { border: dashed 2px #833; }
+
+
+ul.cc-help-tutorial { margin: .5em 0; font-size: 1.1em;}
+ul.cc-help-tutorial li { margin: 1em; line-height: 1.8em; }
+ul.cc-help-tutorial li span.title { font-weight: bold; color: #666; }
+ul.cc-help-tutorial li a { margin: 1em; padding: .2em; }
+
+
+table.user-print-in-school {
+    margin-bottom: 2em;
+    border: 2px solid #555;
+    page-break-after: always;
+}
+table.user-print-in-school th {
+    font-size: 2em;
+    border-bottom: 3px solid #555;
+}
+table.user-print-in-school th, table.user-print-in-school td {
+    padding: .5em;
+    text-align: left;
+}
+
+#app-window-category-search tbody td:last-child { padding-left: 1em; text-align: left; }
+#app-window-category-search tr.category:hover { cursor: pointer; background-color: #fafafa; }
+#app-window-category-search tbody tr.selected { background-color: #EFF2F9; }
+
+#app-window-cc-supplier-search table td:nth-child(3) { text-align: left; }
+#app-window-cc-purchase-list table th:first-child, #app-window-cc-purchase-list thead th:first-child input { width: 8em; }
+#app-window-cc-purchase-list table td:nth-child(7) { text-align: right; }
+
+#app-window-cc-product-search table td:nth-child(7) { text-align: right; }
+
+#app-window-cc-purchase-search table th:first-child, #app-window-cc-purchase-search thead th:first-child input { width: 8em; }
+#app-window-cc-purchase-search table td:last-child { width: 10em; }
+
+#app-window-cc-purchase-view table tbody td:first-child { background-color: #fff; }
+#app-window-cc-purchase-view table tbody td:nth-child(6),
+#app-window-cc-purchase-view table tbody td:nth-child(8),
+#app-window-cc-purchase-view table tbody td:nth-child(10) {
+    padding-right: 1em;
+    text-align: right;
+}
+
+#app-window-cc-delivery-search table td:nth-child(8) { text-align: left; }
+#app-window-cc-delivery-view div.row-data .label { width: 20em; }
+#app-window-cc-delivery-view table tbody td:nth-child(6), 
+#app-window-cc-delivery-view table tbody td:nth-child(8) {
+    padding-right: 1em;
+    text-align: right;
+}
+

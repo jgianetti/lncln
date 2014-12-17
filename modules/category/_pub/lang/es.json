@@ -1,0 +1,67 @@
+{
+    "win_title_list" : "Listado de Categor&iacute;as",
+    "win_title_add" : "Agregar Subcategor&iacute;a",
+    "win_title_mod" : "Modificar Categor&iacute;a",
+    "win_title_del" : "Eliminar Categor&iacute;a",
+    "win_title_info" : "Informaci&oacute;n sobre",
+    "not_found": "No se encontraron categor&iacute;as",
+
+    "add_subcategory" : "Agregar subcategor&iacute;a",
+
+    "parent_category" : "Subcategor&iacute;a de",
+    "name" : "Nombre",
+    "comments" : "Comentarios",
+
+    "add_ok": "Categor&iacute;a agregada con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar la Categor&iacute;a",
+    "mod_ok": "Categor&iacute;a modificada con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar la Categor&iacute;a",
+    "del_confirm": "&iquest;Desea eliminar la siguiente categor&iacute;a?",
+    "del_ok": "Categor&iacute;a eliminada con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar la categor&iacute;a",
+
+
+    "schedule" : "Horarios",
+    "every_day" : "Todos los d&iacute;as",
+    "in": "Ingreso",
+    "out": "Salida",
+    "schedule_behavior_note" : "Esta operaci&oacute;n setea el horario de los usuarios de la categor&iacute;a y sub-categor&iacute;as",
+
+
+    "acl" : "Permisos",
+    "allow" : "Permitir",
+    "deny" : "Denegar",
+    "module" : "M&oacute;dulo",
+    "action" : "Acci&oacute;n",
+    "action_filter_criteria" : "Filtrar acci&oacute;n",
+    "action_filter_value"  : "Valor del filtro",
+    "inherited" : "Heredados",
+
+    "all" : "Todos",
+    "self" : "Usuario en cuesti&oacute;n",
+    "category_id" : "Categor&iacute;a",
+    "cc_supplier_id" : "Proveedor",
+    "opened_by" : "Iniciada por",
+    "acl_del" : "Eliminar permiso",
+
+    "acl_behavior_note_1" : "Un permiso no declarado expl&iacute;citamente como 'permitido' se considera denegado.",
+    "acl_behavior_note_2" : "Resulta m&aacute;s sencillo administrar permisos por categor&iacute;as. Ej: Creando una categor&iacute;a 'Permisos' con subcategor&iacute;as 'Admins', 'Guardia', 'CopyCenter', etc.",
+    "acl_behavior_note_3" : "Se recomienda otorgar los permisos de la manera m&aacute;s espec&iacute;fica posible:",
+    "acl_behavior_note_4" : " &nbsp; Resulta m&aacute;s sencillo  si cada usuario hereda sus permisos de una sola categor&iacute;a. Aunque esto implique crear m&aacute;s categor&iacute;as.",
+    "acl_behavior_note_5" : " &nbsp; Si se desea que un usuario tenga acceso a la mitad de los m&oacute;dulos, se puede otorgarle permisos para 'todos' y denegarle la mitad; u otorgarle permisos solo para la otra mitad. Esta &uacute;ltima opci&oacute;n es la recomendada.",
+
+
+    "acl_del_confirm": "&iquest;Desea eliminar el permiso?",
+    "acl_del_error": "Ha ocurrido un error al eliminar el permiso",
+
+
+    "non_working_days" : "Dias no laborales",
+    "from" : "Desde",
+    "to" : "Hasta",
+
+    "nwd_add_ok": "Se ha agregado el rango de d&iacute;as no laborales a cada usuario de la categor&iacute;a y sub categor&iacute;as",
+    "del_nwd": "Eliminar todos",
+    "nwd_del_confirm": "&iquest;Desea eliminar los rangos de d&iacute;as no laborales para la categor&iacute;a y sub categor&iacute;as?",
+    "nwd_del_ok": "Se han eliminado todos los rangos de d&iacute;as no laborales para la categor&iacute;a y sub categor&iacute;as",
+    "nwd_del_error": "Ha ocurrido un error al eliminar los rangos de d&iacute;as no laborales"
+}

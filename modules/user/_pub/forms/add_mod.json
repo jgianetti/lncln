@@ -1,0 +1,144 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "name",
+                        "id" : "user-add-mod-name",
+                        "caption" : "user.name",
+                        "placeholder" : "Raul",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "last_name",
+                        "id" : "user-add-mod-last-name",
+                        "caption" : "user.last_name",
+                        "placeholder" : "Gonzalez",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "user",
+                        "id" : "user-add-mod-user",
+                        "caption" : "user.user",
+                        "placeholder" : "Raul"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "password",
+                        "name" : "pwd",
+                        "id" : "user-add-mod-pwd",
+                        "caption" : "user.pwd"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "select multiple",
+                        "name" : "cat_ids[]",
+                        "id" : "user-add-mod-cat-ids",
+                        "caption" : "user.category"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "select",
+                        "name" : "cc_cat_ids[]",
+                        "id" : "user-add-mod-cc-cat-ids",
+                        "caption" : "user.cc_category"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "dni",
+                        "id" : "user-add-mod-dni",
+                        "caption" : "user.dni",
+                        "placeholder" : "11.222.333",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "file_number",
+                        "id" : "user-add-mod-file-number",
+                        "caption" : "user.file_number"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "file",
+                        "name" : "image",
+                        "id" : "user-add-mod-image",
+                        "caption" : "user.image"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "email",
+                        "name" : "email",
+                        "id" : "user-add-mod-email",
+                        "caption" : "user.email",
+                        "validate" : {
+                            "email" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "user-add-mod-comments",
+                        "caption" : "user.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "rfid",
+                        "id" : "user-add-mod-rfid",
+                        "caption" : "user.rfid",
+                        "placeholder" : "12345678"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

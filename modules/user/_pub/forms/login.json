@@ -1,0 +1,44 @@
+{
+    "method" : "post",
+    "class" : "cmxform search",
+    "data-ajax-callback" : "on_login",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "user",
+                        "id" : "user-login-user",
+                        "caption" : "user.user",
+                        "placeholder" : "Raul.Gonzalez",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "password",
+                        "name" : "pwd",
+                        "id" : "user-login-pwd",
+                        "caption" : "user.pwd",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit",
+                        "value" : "login"
+                    }]
+                }
+            ]
+        }
+    ]
+}

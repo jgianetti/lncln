@@ -1,0 +1,136 @@
+{
+    "method" : "post",
+    "class" : "ui-widget cmxform",
+    "enctype" : "multipart/form-data",
+    "data-ajax-callback" : "on_submit",
+    "html" : [
+        {
+            "type" : "fieldset",
+            "html" : [
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "name",
+                        "id" : "cc-product-add-mod-name",
+                        "caption" : "cc_product.name",
+                        "placeholder" : "Duct tape",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "deposit",
+                        "id" : "cc-product-add-mod-deposit",
+                        "caption" : "cc_product.deposit",
+                        "placeholder" : "12"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "family",
+                        "id" : "cc-product-add-mod-family",
+                        "caption" : "cc_product.family",
+                        "placeholder" : "34"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "item",
+                        "id" : "cc-product-add-mod-item",
+                        "caption" : "cc_product.item",
+                        "placeholder" : "56"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "brand",
+                        "id" : "cc-product-add-mod-brand",
+                        "caption" : "cc_product.brand",
+                        "placeholder" : "78"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "size",
+                        "id" : "cc-product-add-mod-size",
+                        "caption" : "cc_product.size",
+                        "placeholder" : "90"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "color",
+                        "id" : "cc-product-add-mod-color",
+                        "caption" : "cc_product.color",
+                        "placeholder" : "12"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "barcode",
+                        "id" : "cc-product-add-mod-barcode",
+                        "caption" : "cc_product.barcode",
+                        "placeholder" : "123456789",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "text",
+                        "name" : "measurement_unit",
+                        "id" : "cc-product-add-mod-measurement-unit",
+                        "caption" : "cc_product.measurement_unit",
+                        "placeholder" : "1 unidad",
+                        "validate" : {
+                            "required" : true
+                        }
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "file",
+                        "name" : "image",
+                        "id" : "cc-product-add-mod-image",
+                        "caption" : "cc_product.image"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "textarea",
+                        "name" : "comments",
+                        "id" : "cc-product-add-mod-comments",
+                        "caption" : "cc_product.comments"
+                    }]
+                },
+                {
+                    "type" : "p",
+                    "html" : [{
+                        "type" : "submit"
+                    }]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+<script id="entrance_select" type="text/html">
+    <div class="rfid-add-entrance-select">
+        {{#entrances}}
+        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only app-btn" onclick="App.modules.rfid.add.on_entrance_select($(this).find('span').html());">
+            <span class="ui-button-text">{{.}}</span>
+        </button>
+        {{/entrances}}
+    </div>
+</script>
+<script id="movements_table" type="text/html">
+    <table class="rfid-add-list dataTable td-first-image">
+        <thead>
+        <tr>
+            <th>{{{image}}}</th>
+            <th>{{{fullname}}}</th>
+            <th>{{{category}}}</th>
+            <th>{{{date}}}</th>
+            <th>{{{is_entering}}}</th>
+            <th>{{{comments}}}</th>
+            <th class="action">{{{action}}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</script>
+<script id="movement_tr" type="text/html">
+    {{#user_movement}}
+        <tr data-id="{{id}}">
+            <td><img src="{{user_img}}"></td>
+            <td>{{user_name}}</td>
+            <td>{{{user_cat_names}}}</td>
+            <td>{{date}}</td>
+            <td><img src="{{is_entering_img}}" width="32px"></td>
+            <td>{{comments}}</td>
+            <td>
+                <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only app-btn" onclick="App.modules.rfid.add.remove_movement($(this).closest('tr'));">
+                    <span class="ui-button-text">x</span>
+                </button>
+            </td>
+        </tr>
+    {{/user_movement}}
+</script>

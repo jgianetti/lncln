@@ -1,0 +1,84 @@
+<script id="user" type="text/html">
+    <div class="actions">
+        <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/user/del?id={{user.id}}" data-ajax-callback="del" data-push-state="0"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>
+        <a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/user/mod?id={{user.id}}" data-ajax="1"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>
+    </div>
+    <div class="row-data" data-id="{{user.id}}">
+        <div class="avatar">
+            <img class="{{user.image_class}}" src="{{user.image_src}}" alt="avatar" />
+        </div>
+        <ul>
+            <li><span class="label">{{{name}}}:</span> {{user.last_name}}, {{user.name}}</li>
+            <li><span class="label">{{{dni}}}:</span> {{user.dni}}</li>
+            <li><span class="label">{{{barcode}}}:</span> {{user.id}}</li>
+            <li><span class="label">{{{category}}}:</span> {{user.cat_names}}</li>
+            <li><span class="label">{{{cc_category}}}:</span> {{user.cc_cat_names}}</li>
+            <li><span class="label">{{{comments}}}:</span> {{{user.comments}}}</li>
+            <li><span class="label">{{{deleted}}}:</span>
+                {{#user.deleted}} {{yes}} {{/user.deleted}}
+                {{^user.deleted}} {{no}} {{/user.deleted}}
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script id="tabs_script" type="text/html">
+    <div id="tabs">
+        <ul>
+            {{#tabs.acl}}
+            <li><a href="#tab_acl"><span>{{acl}}</span></a></li>
+            {{/tabs.acl}}
+        </ul>
+        {{#tabs.acl}}
+        <div id="tab_acl">
+            <form method="POST" data-ajax-callback="acl_on_add">
+                <input type="hidden" name="id">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{{allow}} / {{deny}}</th>
+                        <th>{{{module}}}</th>
+                        <th>{{{action}}}</th>
+                        <th>{{{action_filter_criteria}}}</th>
+                        <th>{{{action_filter_value}}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="add">
+                        <td><select name="allow"><option value="1">{{allow}}</option><option value="0">{{deny}}</option></select></td>
+                        <td><select name="module" onchange="App.modules.user.view.acl_on_module(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="module_action" disabled="disabled" onchange="App.modules.user.view.acl_on_action(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="action_filter_criteria" disabled="disabled" onchange="App.modules.user.view.acl_on_action_filter_criteria(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="action_filter_value" disabled="disabled"></select></td>
+                        <td><input type="submit" value="{{add}}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form><br><br><br>
+            {{{acl_behavior_note_1}}}<br>
+            {{{acl_behavior_note_2}}}<br>
+            {{{acl_behavior_note_3}}}<br>
+            {{{acl_behavior_note_4}}}<br>
+            {{{acl_behavior_note_5}}}
+        </div>
+        {{/tabs.acl}}
+    </div>
+</script>
+
+<script id="acl_tr" type="text/html">
+    {{#acl_data}}
+    <tr class="permission" data-id={{id}}>
+        <td>{{{allow}}}</td>
+        <td>{{{module}}}</td>
+        <td>{{{action}}}</td>
+        <td>{{{action_filter_criteria}}}</td>
+        <td>{{{action_filter_value_label}}}</td>
+        <td>{{#inherited_id}}{{{inherited_name}}}{{/inherited_id}}
+            {{^inherited_id}}
+                <button type="button" class="ui-state-default ui-corner-all app-btn" onclick="App.modules.user.view.acl_del_confirm($(this).closest('tr').data('id'))">{{del}}</button>
+            {{/inherited_id}}
+        </td>
+    </tr>
+    {{/acl_data}}
+</script>

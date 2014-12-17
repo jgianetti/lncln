@@ -1,0 +1,48 @@
+{
+    "win_title_search" : "Buscar Productos",
+    "win_title_list" : "Listado de Productos",
+    "win_title_view" : "Ver Producto",
+    "win_title_add" : "Agregar Producto",
+    "win_title_mod" : "Modificar Producto",
+    "win_title_del" : "Eliminar Productos",
+
+    "not_found": "No se encontraron productos",
+
+    "name_barcode" : "Nombre o C&oacute;digo",
+
+    "name": "Nombre",
+    "deposit" : "Dep&oacute;sito",
+    "family" : "Familia",
+    "item" : "Item",
+    "brand" : "Marca",
+    "size" : "Tama&ntilde;o",
+    "color" : "Color",
+    "barcode_int" : "C&oacute;digo interno",
+    "barcode" : "C&oacute;digo externo",
+    "measurement_unit" : "Unidad de medida",
+    "stock" : "Unidades en stock",
+    "stock_price" : "Precio total del stock",
+    "comments" : "Comentarios",
+    "deleted" : "Eliminado",
+
+    "image": "Im&aacute;gen",
+    "image_delete" : "Eliminar im&aacute;gen actual",
+
+    "quantity" : "Cantidad",
+    "quantity_delivered" : "Cantidad entregada",
+    "unit_price" : "Precio unitario",
+
+    "image_error" : "Ha ocurrido un error al guardar la im&aacute;gen",
+    
+    "cc_purchases" : "Compras",
+    "cc_deliveries" : "Entregas",
+
+    "add_ok": "Producto agregado con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar el producto",
+    "mod_ok": "Producto modificado con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar el producto",
+    "view_title" : "Ver producto",
+    "del_confirm" : "&iquest;Desea eliminar el siguiente producto?",
+    "del_ok": "Producto eliminado con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar el producto"
+}

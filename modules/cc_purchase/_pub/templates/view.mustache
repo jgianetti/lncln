@@ -1,0 +1,92 @@
+<script id="cc_purchase" type="text/html">
+    <div class="actions">
+        <a class="ui-state-default ui-corner-all app-btn" title="{{del}}" href="{{url_base}}/cc_purchase/del?id={{cc_purchase.id}}" data-push-state="0" data-ajax-callback="del"><span class="ui-icon ui-icon-closethick">{{del}}</span></a>
+        <a class="ui-state-default ui-corner-all app-btn" title="{{mod}}" href="{{url_base}}/cc_purchase/mod?id={{cc_purchase.id}}"><span class="ui-icon ui-icon-pencil">{{mod}}</span></a>
+    </div>
+    <div class="row-data">
+        <ul>
+            <li><span class="label">{{{cc_supplier_name}}}:</span> <a href="{{url_base}}/cc_supplier/view?id={{cc_purchase.cc_supplier_id}}" title="{{view_cc_supplier}}">{{cc_purchase.cc_supplier_name}}</a> </li>
+            <li><span class="label">{{{opened_on}}}:</span> {{cc_purchase.opened_on}} </li>
+            <li><span class="label">{{{opened_by}}}:</span> <a href="{{url_base}}/user/view?id={{cc_purchase.opened_by}}" title="{{view_user}}">{{cc_purchase.opened_by_name}}</a> </li>
+            <li class="closed-on"><span class="label">{{{closed_on}}}:</span> {{{cc_purchase.closed_on}}} </li>
+            <li class="closed-by"><span class="label">{{{closed_by}}}:</span>
+
+                    {{#cc_purchase._status_closed}}<a href="{{url_base}}/user/view?id={{cc_purchase.closed_by}}" title="{{view_user}}">{{cc_purchase.closed_by_name}}</a>{{/cc_purchase._status_closed}}
+                    {{^cc_purchase._status_closed}} &nbsp; {{/cc_purchase._status_closed}}
+                </span>
+            </li>
+            <li><span class="label">{{{order_num}}}:</span> {{cc_purchase.order_num}} </li>
+            <li><span class="label">{{{comments}}}:</span> {{cc_purchase.comments}} </li>
+            <li><span class="label">{{{products}}}:</span> 
+                <div class="float-container">
+                <table class="app-table td-first-image">
+                    <thead>
+                    <tr>
+                        <th>{{{image}}}</th>
+                        <th>{{{name}}}</th>
+                        <th>{{{barcode_int}}}</th>
+                        <th>{{{barcode}}}</th>
+                        <th>{{{measurement_unit}}}</th>
+                        <th>{{unit_price}}</th>
+                        <th>{{quantity}}</th>
+                        <th>{{subtotal}}</th>
+                        <th>{{quantity_delivered}}</th>
+                        <th>{{{total_price_delivered}}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#cc_purchase.products}}
+                    <tr data-id="{{id}}">
+                        <td>
+                            {{#_image}}
+                            <img src="{{url_base}}/_pub/img/cc_product/{{id}}.png">
+                            {{/_image}}
+                            {{^_image}}
+                            <img src="{{url_base}}/_pub/img/cc_product/not_found.jpg">
+                            {{/_image}}
+                        </td>
+                        <td><a href="{{url_base}}/cc_product/view?id={{id}}" title="{{view_cc_product}}">{{name}}</a></td>
+                        <td>{{deposit}}{{family}}{{item}}{{brand}}{{size}}{{color}}</td>
+                        <td>{{barcode}}</td>
+                        <td>{{measurement_unit}}</td>
+                        <td>${{unit_price}}</td>
+                        <td>{{quantity}}</td>
+                        <td>${{subtotal}}</td>
+                        <td>{{quantity_delivered}}</td>
+                        <td>${{total_price_delivered}}</td>
+                    </tr>
+                    {{/cc_purchase.products}}
+                    </tbody>
+                </table>
+                </div>
+             </li>
+            <li><span class="label">{{{total_cost}}}:</span> ${{cc_purchase._total}} </li>
+            <li class="status"><span class="label">{{{status}}}:</span> 
+                {{#cc_purchase._status_open}} {{open}} {{/cc_purchase._status_open}}
+                {{#cc_purchase._status_to_approve}} {{to_approve}} {{/cc_purchase._status_to_approve}}
+                {{#cc_purchase._status_closed}} {{closed}} {{/cc_purchase._status_closed}}
+             </li>
+
+            {{#cc_purchase._status_open}}
+                {{#_user.can_approve}}
+                <li class="approve"><span class="label">{{{action}}}:</span> 
+                    <a class="ui-state-default ui-corner-all app-btn" title="{{approve}}" onclick="App.modules.cc_purchase.view.approve({{cc_purchase.id}});">{{approve}}</a>
+                 </li>
+                {{/_user.can_approve}}
+            {{/cc_purchase._status_open}}
+
+            {{^cc_purchase._status_closed}}
+                {{#_user.can_close}}
+                <li class="close"><span class="label">{{{action}}}:</span> 
+                    <a class="ui-state-default ui-corner-all app-btn" title="{{close}}" onclick="App.modules.cc_purchase.view.close({{cc_purchase.id}});">{{close}}</a>
+                 </li>
+                {{/_user.can_close}}
+            {{/cc_purchase._status_closed}}
+
+            <li><span class="label">{{{deleted}}}:</span> 
+                {{#cc_purchase.deleted}} {{yes}} {{/cc_purchase.deleted}}
+                {{^cc_purchase.deleted}} {{no}} {{/cc_purchase.deleted}}
+             </li>
+        </ul>
+    </div>
+</script>

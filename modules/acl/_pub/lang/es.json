@@ -1,0 +1,28 @@
+{
+    "win_title_search" : "Buscar Permisos",
+    "win_title_list" : "Listado de Permisos",
+    "win_title_view" : "Ver Permiso",
+    "win_title_info" : "Informaci&oacute;n sobre",
+    "win_title_add" : "Agregar Permiso",
+    "win_title_mod" : "Modificar Permiso",
+    "win_title_del" : "Eliminar Permiso",
+
+    "name" : "Nombre",
+    "allow" : "Permitir",
+    "allowed" : "Permitido",
+    "not_allowed" : "No Permitido",
+    "module" : "M&oacute;dulo",
+    "action" : "Acci&oacute;n",
+    "filter_criteria" : "Filtrar",
+    "filter_value" : "Valor del filtro",
+
+    "self" : "asociados/as al usuario",
+
+    "add_ok": "Permiso agregado con &eacute;xito",
+    "add_error": "Ha ocurrido un error al agregar el permiso",
+    "mod_ok": "Permiso modificado con &eacute;xito",
+    "mod_error": "Ha ocurrido un error al modificar el permiso",
+    "del_confirm": "&iquest;Desea eliminar el permiso?",
+    "del_ok": "Permiso eliminado con &eacute;xito",
+    "del_error": "Ha ocurrido un error al eliminar los permisos"
+}
