@@ -20,10 +20,6 @@ require_once('etc/.loader.php');
  * @var $cfg array
  */
 
-ini_set('log_errors', 1);
-ini_set('error_log', $cfg['error_log']);
-ini_set('html_errors', false);
-
 
 /************
  * CLI ARGS *
@@ -75,30 +71,43 @@ unset($arg, $value, $time, $debug);
  * DB *
  ******/
 try { $dbh = new PDO($cfg['db']['dsn'], $cfg['db']['dbu'], $cfg['db']['dbp']); }
-catch (PDOException $e) { error_log('Database :: '.$e->getMessage()); die(); }
+catch (PDOException $e) { die(json_encode(array('textStatus' => 'error', 'errors' => 'Fatal error: No Database connection'))); }
 unset($cfg['db']);
-$Db = new Db($dbh);
+$Db = new Db($dbh, ((APP_ENV == APP_ENV_DEV) ? ['errmode' => PDO::ERRMODE_EXCEPTION] : null));
 
 
 /**********
  * MAILER *
  *********/
-$mailer = new_PHPMailer($cfg['smtp']);
-$mailer->Subject    = '[LINCOLN - SISTEMA - ACCESO] Reporte del '.date('d-m-Y', TODAY);
-$mailer->Body       = 'Se han adjuntado los listados en formato CSV para ser visualizados en Excel.';
+$mailer = new \PHPMailer();
+$mailer->IsSMTP();
+$mailer->Host       = $cfg['smtp']['host'];
+$mailer->Port       = $cfg['smtp']['port'];
+$mailer->From       = $cfg['smtp']['from'] ;
+$mailer->FromName   = $cfg['smtp']['from_name'];
 
-foreach ($cfg['cron']['recipients'] as $recipient) $mailer->AddAddress($recipient['email'], (isset($recipient['name']) ? $recipient['name'] : null));
+if (!empty($cfg['smtp']['secure'])) $mailer->SMTPSecure = $cfg['smtp']['secure']; 
+
+if ($mailer->SMTPAuth = $cfg['smtp']['auth']) {
+    $mailer->Username = $cfg['smtp']['user'];
+    $mailer->Password = $cfg['smtp']['pwd'];
+}
+
+$mailer->Subject    = '[NUESTRA ESCUELA - NEC2] Reporte del '.date('d-m-Y', TODAY);
+$mailer->Body       = 'Cuerpo del mensaje.';
+
+$recipients         = $cfg['smtp']['recipients'];
+foreach ($recipients as $email) $mailer->AddAddress($email['email'], (isset($email['name'])?$email['name']:null));
 
 
 /***********
  * CRONTAB *
  **********/
-$files_to_unlink = array();
+$files_to_unlink = [];
 
-$crontab = array(
-    'rfid',
-    'user_absence'
-);
+$crontab = [
+    
+];
 
 foreach ($crontab as $file) require_once('_bin/cron.'.$file.'.php');
 
@@ -106,6 +115,6 @@ foreach ($crontab as $file) require_once('_bin/cron.'.$file.'.php');
  * MAIL *
  ********/
 if ($files_to_unlink && !DEBUG) {
-    if (!$mailer->send()) error_log('CRON :: Message could not be sent :: '.$mailer->ErrorInfo);
+    if (!$mailer->send()) log_error('Message could not be sent :: ' . $mailer->ErrorInfo, $cfg['cron_error_file']);
     foreach ($files_to_unlink as $f_name) unlink($f_name);
 }

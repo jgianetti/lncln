@@ -25,6 +25,10 @@ $cfg['smtp']['from']        = '';
 $cfg['smtp']['from_name']   = '';
 $cfg['smtp']['charset']     = 'UTF-8';
 
+$cfg['cron']['recipients'] = [
+    ['name' => 'Destinatario', 'email' => 'destinatario@example.edu.ar'],
+];
+
 // HTTP_HOST[/URL_BASE][/REQUEST_URL]
 $cfg['url_base']    = '';
 

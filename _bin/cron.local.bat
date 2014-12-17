@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\PHP5.4\php.exe" -f "D:\htdocs\lincoln\_bin\cron.php" debug=true

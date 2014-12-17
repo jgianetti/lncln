@@ -1,0 +1,1 @@
+"C:\Program Files\php5.4\php.exe" -f "C:\Program Files\Apache2.4\htdocs\sistema\_bin\cron.php"
