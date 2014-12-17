@@ -76,7 +76,10 @@ var App = (function (my) {
                         { "aTargets": [ 0 ], // image
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
-                                if (type === 'display') { return '<img src="'+App.url_base+'/_pub/img/user/'+(source._image ? source.id+'.png':'not_found.jpg')+'">' }
+                                if (type === 'display') {
+                                    if (source._image) return '<img src="'+App.url_base+'/uploads/user/_pub/'+source.id+'.png'+'">';
+                                    else return '<img src="'+App.url_base+'/modules/user/_pub/img/not_found.jpg">';
+                                }
                                 return source._image;
                             }
                         },
@@ -194,7 +197,9 @@ var App = (function (my) {
                 _module.cache.view.acl_defs = data.acl_defs;
                 _module.cache.view.categories = data.categories;
 
-                data.user.image_src = App.url_base+'/_pub/img/user/'+(data.user._image ? data.user.id+'.png':'not_found.jpg');
+                if (data.user._image) data.user.image_src = App.url_base+'/uploads/user/_pub/'+source.id+'.png';
+                else data.user.image_src = App.url_base+'/modules/user/_pub/img/not_found.jpg';
+
                 data.user.image_class = (data.user.in_shool ? 'in' : 'out');
 
                 data.acl_data = _module.view.acl_parse_data(data.acl_data);
@@ -802,7 +807,7 @@ var App = (function (my) {
                     }
 
                     $form_image.find('label').html(Globalize.localize('user')['image_delete']).end()
-                        .find('img').prop('src', App.url_base + '/_pub/img/user/' + data.user.id + '.png').end()
+                        .find('img').prop('src', App.url_base+'/uploads/user/_pub/'+source.id+'.png').end()
                         .insertAfter($form.find('input[name="image"]').parent());
                 }
 

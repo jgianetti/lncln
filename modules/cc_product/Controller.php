@@ -65,7 +65,7 @@ class Controller
                     if (isset($_FILES['image']) && $_FILES['image']['size'] && !$_FILES['image']['error']) {
                         $pic = new Image($_FILES['image']['tmp_name']);
                         $pic->scaleToTarget(200,200);
-                        $pic->save('_pub/img/cc_product/'.$id.'.png', IMAGETYPE_PNG, 100);
+                        $pic->save(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png', IMAGETYPE_PNG, 100);
                     }
                 }
             }
@@ -103,7 +103,7 @@ class Controller
 
                 // Delete old Picture
                 if (isset($post['image_delete']) && $post['image_delete']) {
-                    if (file_exists('_pub/img/cc_product/'.$id.'.png')) unlink('_pub/img/cc_product/'.$id.'.png');
+                    if (file_exists(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png');
                     unset($post['image_delete']);
                 }
 
@@ -119,7 +119,7 @@ class Controller
                     if (isset($_FILES['image']) && $_FILES['image']['size'] && !$_FILES['image']['error']) {
                         $pic = new Image($_FILES['image']['tmp_name']);
                         $pic->scaleToTarget(200,200);
-                        $pic->save('_pub/img/cc_product/'.$id.'.png', IMAGETYPE_PNG, 100);
+                        $pic->save(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png', IMAGETYPE_PNG, 100);
                     }
                 }
             }
@@ -179,7 +179,7 @@ class Controller
                 if (!$cc_productModel->delByIds($id)) $textStatus = "error";
                 else {
                     $textStatus = "ok";
-                    if (file_exists('_pub/img/cc_product/'.$id.'.png')) unlink('_pub/img/cc_product/'.$id.'.png');
+                    if (file_exists(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/cc_product/_pub/'.$id.'.png');
                 }
             }
 

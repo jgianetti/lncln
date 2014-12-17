@@ -256,7 +256,7 @@ class User_AbsenceModel extends \DbDataMapper
         foreach ($rows as &$row) {
             //Mustache compatible
             $row['date'] = date('d/m/Y',strtotime($row['date']));
-            $row['user_img'] = file_exists('_pub/img/user/'.$row['user_id'].'.png');
+            $row['user_img'] = file_exists(APP_ROOT . 'uploads/user/_pub/'.$row['user_id'].'.png');
             $row = sanitizeToJson($row);
         }
         return $rows;

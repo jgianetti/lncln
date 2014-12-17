@@ -37,7 +37,10 @@ var App = (function (my) {
                         { "aTargets": [ 0 ], // image
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
-                                if (type === 'display') { return '<img src="'+App.url_base+'/_pub/img/user/'+(parseInt(source.user_img) ? source.user_id+'.png':'not_found.jpg')+'">' }
+                                if (type === 'display') {
+                                    if (parseInt(source.user_img)) return '<img src="'+App.url_base+'/uploads/user/_pub/'+source.user_id+'.png">';
+                                    else return '<img src="'+App.url_base+'/modules/user/_pub/img/not_found.jpg">';
+                                }
                                 return source.user_img;
                             }
                         },

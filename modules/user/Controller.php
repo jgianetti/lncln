@@ -54,7 +54,7 @@ class Controller {
             $user              = sanitizeToJson($user);
             $user['in_school'] = intval($user['in_school']);
             $user['deleted']   = intval($user['deleted']);
-            $user['_image']    = file_exists('_pub/img/user/'.$user['id'].'.png');
+            $user['_image']    = file_exists(APP_ROOT . 'uploads/user/_pub/'.$user['id'].'.png');
         }
 
         if (!$search_params['jqdt']) return['users' => &$users];
@@ -118,7 +118,7 @@ class Controller {
             if (!empty($user['pwd'])) { $user['_has_pwd'] = true; unset($user['pwd']); }
 
             $user           = sanitizeToJson($user);
-            $user['_image'] = file_exists('_pub/img/user/'.$id.'.png'); // user has an Image
+            $user['_image'] = file_exists(APP_ROOT . 'uploads/user/_pub/'.$user['id'].'.png');
 
             return array_merge($return, [ 'user' => $user ]);
         }
@@ -157,7 +157,7 @@ class Controller {
         $return = array();
         $user['comments']           = ($user['comments'] ? nl2br($user['comments']) : null);
         $return['user']             = sanitizeToJson($user);
-        $return['user']['_image']   = file_exists('_pub/img/user/'.$id.'.png');
+        $return['user']['_image']   = file_exists(APP_ROOT . 'uploads/user/_pub/'.$user['id'].'.png');
 
         if ($acl->is_allowed($App->session->get('user')['acl'],'user.set_schedule')) $return['tabs']['schedule'] = true;
         if ($acl->is_allowed($App->session->get('user')['acl'],'user.acl_add') || $acl->is_allowed($App->session->get('user')['acl'],'user.acl_del')) $return['tabs']['acl'] = true;
@@ -207,7 +207,7 @@ class Controller {
             // hard delete from DB
             else {
                 if (!$userRepository->del($id)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_del'));
-                if (file_exists('_pub/img/user/'.$id.'.png')) unlink('_pub/img/user/'.$id.'.png');
+                if (file_exists(APP_ROOT . 'uploads/user/_pub/'.$user['id'].'.png')) unlink(APP_ROOT . 'uploads/user/_pub/'.$user['id'].'.png');
             }
         }
 
@@ -518,7 +518,7 @@ class Controller {
             ->setUserCcCategory($id,($App->request->fetch('cc_cat_ids') ?: null), ($old_row ? $old_row['cc_cat_ids'] : null));
 
         // Delete old Picture
-        if ($App->request->fetch('image_delete') && file_exists('_pub/img/user/'.$id.'.png')) unlink('_pub/img/user/'.$id.'.png');
+        if ($App->request->fetch('image_delete') && file_exists(APP_ROOT . 'uploads/user/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/user/_pub/'.$id.'.png');
 
         if (!$this->saveImage($App, $id)) return ['textStatus' => 'error', 'errors' => ['image' => 'error_file_upload']];
         return ['textStatus' => 'ok', 'id' => $id];
@@ -555,7 +555,7 @@ class Controller {
 
         $pic = new Image($image['tmp_name']);
         $pic->scaleToTarget(200,200);
-        $pic->save('_pub/img/user/'.$id.'.png', IMAGETYPE_PNG, 100);
+        $pic->save(APP_ROOT . 'uploads/user/_pub/'.$id.'.png', IMAGETYPE_PNG, 100);
 
         return true;
     }

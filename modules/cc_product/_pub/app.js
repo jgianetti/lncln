@@ -34,7 +34,10 @@ var App = (function (my) {
                         { "aTargets": [ 0 ], // iamge
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
-                                if (type === 'display') { return '<img src="'+App.url_base+'/_pub/img/cc_product/'+(source._image ? source.id+'.png':'not_found.jpg')+'">' }
+                                if (type === 'display') {
+                                    if (source._image) return '<img src="'+App.url_base+'/uploads/cc_product/_pub/'+source.id+'.png">';
+                                    else return '<img src="'+App.url_base+'/modules/cc_product/_pub/img/not_found.jpg">';
+                                }
                                 return source._image;
                             }
                         },
@@ -115,8 +118,9 @@ var App = (function (my) {
                 if (!required_files) return;
 
                 App.cacheAppWindows();
-                
-                data.cc_product.image_src = App.url_base+'/_pub/img/cc_product/'+(data.cc_product._image ? data.cc_product.id+'.png':'not_found.jpg');
+
+                if (data.cc_product._image) data.cc_product.image_src = App.url_base+'/uploads/cc_product/_pub/'+data.cc_product.id+'.png';
+                else data.cc_product.image_src = App.url_base+'/modules/cc_product/_pub/img/not_found.jpg';
 
                 $('#main').html(
                     $('#cache > div[name="app-window"]').clone().prop('id', 'app-window-cc-product-view')
@@ -583,7 +587,7 @@ var App = (function (my) {
                     }
 
                     $form_image.find('label').html(Globalize.localize('cc_product')['image_delete']).end()
-                        .find('img').prop('src', App.request.url_base + '/_pub/img/cc_product/' + data.cc_product.id + '.png').end()
+                        .find('img').prop('src', App.url_base+'/uploads/user/_pub/' + data.cc_product.id + '.png').end()
                         .insertAfter($form.find('input[name="image"]').parent());
                 }
 

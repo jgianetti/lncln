@@ -37,7 +37,10 @@ var App = (function (my) {
                         { "aTargets": [ 0 ], // image
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
-                                if (type === 'display') { return '<img src="'+App.url_base+'/_pub/img/user/'+(parseInt(source.user_img) ? source.user_id+'.png':'not_found.jpg')+'">' }
+                                if (type === 'display') {
+                                    if (parseInt(source.user_img)) return '<img src="'+App.url_base+'/uploads/user/_pub/'+source.id+'.png'+'">';
+                                    else return '<img src="'+App.url_base+'/modules/user/_pub/img/not_found.jpg">';
+                                }
                                 return source.user_img;
                             }
                         },
@@ -276,7 +279,8 @@ var App = (function (my) {
                 // Translate error
                 if (data.textStatus != 'ok') App.errorsWindow(data.errors, Globalize.localize('rfid'));
                 else {
-                    data.user_movement.user_img = App.url_base + '/_pub/img/user/'+ (parseInt(data.user_movement.user_img) ? data.user_movement.user_id + '.png' : 'not_found.jpg');
+                    if (parseInt(data.user_movement.user_img)) data.user_movement.user_img = App.url_base+'/uploads/user/_pub/'+ data.user_movement.user_id + '.png';
+                    else data.user_movement.user_img = App.url_base+'/modules/user/_pub/img/not_found.jpg';
 
                     data.user_movement.user_cat_names = data.user_movement.user_cat_names.replace(',', '<br>');
 

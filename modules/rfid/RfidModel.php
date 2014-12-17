@@ -364,7 +364,7 @@ class RfidModel
 
             $row['is_entering'] = ((isset($row['is_entering'])) ? intval($row['is_entering']) : null);
             $row['deleted']     = ((isset($row['deleted'])) ? intval($row['deleted']) : null);
-            $row['user_img']    = file_exists('_pub/img/user/'.$row['user_id'].'.png');
+            $row['user_img']    = file_exists(APP_ROOT . 'uploads/user/_pub/'.$row['user_id'].'.png');
             $row['comments']    = ((isset($row['comments']) && $row['comments']) ? nl2br($row['comments']) : null);
             $row                = sanitizeToJson($row);
         }

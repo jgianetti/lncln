@@ -378,6 +378,9 @@ var App = (function (my) {
                 console.log('cc_delivery.add_mod.cc_product_add()');
                 if (_module.add_mod.products.indexOf(parseInt(item.id)) != -1) return;
                 _module.add_mod.products.push(parseInt(item.id));
+
+                if (item._image) item.image_src = App.url_base+'/uploads/cc_product/_pub/'+item.id+'.jpg';
+                else item.image_src = App.url_base+'/modules/cc_product/_pub/img/not_found.jpg';
                 $('#main > div[name="app-window-cc-delivery-add-mod"] form table').show().find('tbody').append(Mustache.render(App.templates.cc_delivery.add_mod.products_tbody, $.extend({},Globalize.localize('_base'), Globalize.localize('cc_product'), {products: [item]}), App.templates._base));
             };
 

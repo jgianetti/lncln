@@ -152,7 +152,7 @@ class CC_ProductModel extends \DbDataMapper
             $row['stock']       = intval($row['quantity']) - intval($row['quantity_delivered']);
             $row['stock_price'] = intval($row['total_price']) - intval($row['total_price_delivered']);
             $row['deleted']     = intval($row['deleted']);
-            $row['_image']      = file_exists('_pub/img/cc_product/'.$row['id'].'.png');
+            $row['_image']      = file_exists(APP_ROOT . 'uploads/cc_product/_pub/'.$row['id'].'.png');
        }
         return $rows;
     }

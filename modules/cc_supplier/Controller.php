@@ -39,7 +39,9 @@ class Controller
             // Mustache compatible
             $e = sanitizeToJson($e);
             $e['deleted'] = intval($e['deleted']);
-            $e['image_src'] = $App->cfg['base_url'] . '/' . $image_src . (file_exists($image_src.$e['id'].'.png') ? $e['id'].'.png' : 'not_found.jpg');
+
+            if (file_exists(APP_ROOT . 'uploads/cc_supplier/_pub/'.$e['id'].'.png')) $e['image_src'] = $App->cfg['base_url'] . '/uploads/cc_supplier/_pub/' . $e['id'].'.png';
+            else $e['image_src'] = $App->cfg['base_url'] . '/modules/user/_pub/img/not_found.jpg';
         }
 
         $return['sEcho'] = $App->request->fetch('sEcho');
@@ -71,7 +73,7 @@ class Controller
                     if (isset($_FILES['image']) && $_FILES['image']['size'] && !$_FILES['image']['error']) {
                         $pic = new Image($_FILES['image']['tmp_name']);
                         $pic->scaleToTarget(200,200);
-                        $pic->save('_pub/img/cc_supplier/'.$id.'.png', IMAGETYPE_PNG, 100);
+                        $pic->save(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png', IMAGETYPE_PNG, 100);
                     }
                 }
             }
@@ -113,7 +115,7 @@ class Controller
 
                 // Delete old Picture
                 if (isset($post['image_delete']) && $post['image_delete']) {
-                    if (file_exists('_pub/img/cc_supplier/'.$id.'.png')) unlink('_pub/img/cc_supplier/'.$id.'.png');
+                    if (file_exists(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png');
                     unset($post['image_delete']);
                 }
 
@@ -129,7 +131,7 @@ class Controller
                     if (isset($_FILES['image']) && $_FILES['image']['size'] && !$_FILES['image']['error']) {
                         $pic = new Image($_FILES['image']['tmp_name']);
                         $pic->scaleToTarget(200,200);
-                        $pic->save('_pub/img/cc_supplier/'.$id.'.png', IMAGETYPE_PNG, 100);
+                        $pic->save(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png', IMAGETYPE_PNG, 100);
                     }
                 }
             }
@@ -155,10 +157,11 @@ class Controller
         // Mustache compatible
         $cc_supplier = sanitizeToJson($cc_supplier);
 
-        $image_src = '_pub/img/cc_supplier/';
-        $cc_supplier['image_src'] = $App->cfg['base_url'] . '/' . $image_src . (file_exists($image_src.$cc_supplier['id'].'.png') ? $cc_supplier['id'].'.png' : 'not_found.jpg');
-        $cc_supplier['comments'] = nl2br($cc_supplier['comments']);
-        $cc_supplier['deleted'] = intval($cc_supplier['deleted']);
+        if (file_exists(APP_ROOT . 'uploads/cc_supplier/_pub/'.$cc_supplier['id'].'.png')) $cc_supplier['image_src'] = $App->cfg['base_url'] . '/uploads/cc_supplier/_pub/' . $cc_supplier['id'].'.png';
+        else $cc_supplier['image_src'] = $App->cfg['base_url'] . '/modules/user/_pub/img/not_found.jpg';
+
+        $cc_supplier['comments']  = nl2br($cc_supplier['comments']);
+        $cc_supplier['deleted']   = intval($cc_supplier['deleted']);
 
         return compact('cc_supplier');
     }
@@ -201,7 +204,7 @@ class Controller
                 if (!$cc_supplierModel->delByIds($id)) $textStatus = "error";
                 else {
                     $textStatus = "ok";
-                    if (file_exists('_pub/img/cc_supplier/'.$id.'.png')) unlink('_pub/img/cc_supplier/'.$id.'.png');
+                    if (file_exists(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/cc_supplier/_pub/'.$id.'.png');
                 }
             }
 
