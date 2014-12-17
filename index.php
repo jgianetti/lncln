@@ -20,7 +20,7 @@ if (!defined('APP_ENV')) define('APP_ENV', getenv('APP_ENV') ?: APP_ENV_PROD);
 if (APP_ENV == APP_ENV_DEV) error_reporting(E_ALL ^ E_STRICT);
 else error_reporting(0);
 
-define('APP_ROOT', __DIR__ . '/');
+define('APP_ROOT', str_replace('\\','/',__DIR__) . '/');
 
 $errors = [];
 
