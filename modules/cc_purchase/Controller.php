@@ -194,7 +194,12 @@ class Controller
             $image_src = '_pub/img/cc_product/';
             foreach ($cc_purchase['products'] as $i => $cc_p) {
                 if (!$cc_p['quantity_delivered']) $cc_purchase['products'][$i]['_removable'] = true;
-                $cc_purchase['products'][$i]['image_src'] = $App->cfg['base_url'] . '/' . $image_src . (file_exists($image_src.$cc_p['id'].'.png') ? $cc_p['id'].'.png' : 'not_found.jpg');
+				if (file_exists(APP_ROOT . 'uploads/cc_product/_pub/' . $cc_p['id'].'.png')) {
+					$cc_purchase['products'][$i]['image_src'] = $App->cfg['base_url'] . '/uploads/cc_product/_pub/' . $cc_p['id'].'.png';
+				}
+				else {
+					$cc_purchase['products'][$i]['image_src'] = $App->cfg['base_url'] . '/modules/cc_product/_pub/img/not_found.jpg';
+				}
             }
 
             $cc_productModel = new CC_ProductModel($App->db->getPdo());
