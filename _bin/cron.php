@@ -11,7 +11,7 @@
  *
  ************/
 
-if (basename(getcwd()) == '_bin') chdir('../');
+chdir(__DIR__ . '/../');
 
 require_once('helpers/.loader.php');
 require_once('etc/.loader.php');

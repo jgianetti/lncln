@@ -54,7 +54,7 @@ if ($request->fetch('logout')) $session->destroy();
 // not logged
 if ((!($session_user = $session->get('user')) || !isset($session_user['id'])) && ($module!='user' || $action!='login')) {
     if ($request->fetch('ajax')) die(json_encode(['textStatus' => 'error', 'errors' => ['login_timeout']]));
-    header('Location: ' . $cfg['url_base'] .'/user/login'); die();
+    header('Location: ' . $cfg['base_url'] .'/user/login'); die();
 }
 
 if (!isset($session_user['lang']) || !$session_user['lang']) $session_user['lang'] = $cfg['languages'][0];
