@@ -38,7 +38,7 @@ var App = (function (my) {
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') {
-                                    if (parseInt(source.user_img)) return '<img src="'+App.url_base+'/uploads/user/_pub/'+source.id+'.png'+'">';
+                                    if (parseInt(source.user_img)) return '<img src="'+App.url_base+'/uploads/user/_pub/'+source.user_id+'.png'+'">';
                                     else return '<img src="'+App.url_base+'/modules/user/_pub/img/not_found.jpg">';
                                 }
                                 return source.user_img;
@@ -324,10 +324,10 @@ var App = (function (my) {
                 _module.add_mod.resetForm($form);
 
                 //Add 'image'
-                if (data.user_movement.image_src) {
+                if (data.user_movement.user_img) {
                     $form.find('#rfid-add-mod-image').html(
                         $('<fieldset><p><img></p></fieldset>')
-                            .find('img').prop('src', App.url_base + '/_pub/img/user/' + data.user_movement.user_id + '.png').end()
+                            .find('img').prop('src', App.url_base + '/uploads/user/_pub/' + data.user_movement.user_id + '.png').end()
                     )
                 }
 

@@ -197,7 +197,7 @@ var App = (function (my) {
                 _module.cache.view.acl_defs = data.acl_defs;
                 _module.cache.view.categories = data.categories;
 
-                if (data.user._image) data.user.image_src = App.url_base+'/uploads/user/_pub/'+source.id+'.png';
+                if (data.user._image) data.user.image_src = App.url_base+'/uploads/user/_pub/'+data.user.id+'.png';
                 else data.user.image_src = App.url_base+'/modules/user/_pub/img/not_found.jpg';
 
                 data.user.image_class = (data.user.in_shool ? 'in' : 'out');
@@ -807,7 +807,7 @@ var App = (function (my) {
                     }
 
                     $form_image.find('label').html(Globalize.localize('user')['image_delete']).end()
-                        .find('img').prop('src', App.url_base+'/uploads/user/_pub/'+source.id+'.png').end()
+                        .find('img').prop('src', App.url_base+'/uploads/user/_pub/'+data.user.id+'.png').end()
                         .insertAfter($form.find('input[name="image"]').parent());
                 }
 
