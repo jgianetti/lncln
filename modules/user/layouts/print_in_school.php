@@ -17,9 +17,9 @@ $lang['user'] = json_decode(file_get_contents('modules/user/_pub/lang/es.json'),
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
     <title><?php echo $lang['_base']['document_title'] ?> :: <?php /* echo $lang['_base'][$request->getModule()."_".$request->getAction()] */ ?></title>
-    <link rel="stylesheet" href="<?php echo $cfg['url_base'] ?>/_pub/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="<?php echo $cfg['url_base'] ?>/_pub/css/jquery.dataTables.TableTools.css" />
-    <link rel="stylesheet" href="<?php echo $cfg['url_base'] ?>/_pub/css/app.css" />
+    <link rel="stylesheet" href="<?php echo $cfg['base_url'] ?>/_pub/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="<?php echo $cfg['base_url'] ?>/_pub/css/jquery.dataTables.TableTools.css" />
+    <link rel="stylesheet" href="<?php echo $cfg['base_url'] ?>/_pub/css/app.css" />
 </head>
 <body>
 <div id="container">
