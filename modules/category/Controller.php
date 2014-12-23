@@ -141,132 +141,130 @@ class Controller
         if (!$categoryRepository->del($id)) return ['textStatus' => 'error', 'errors' => ['error_db' => 'error_del']];
         return array('textStatus' => 'ok');
     }
-}
 
-return;
-/**********
- * ACTION *
- **********/
-switch ($App->request->getAction()) {
+    /************
+     * SCHEDULE *
+     ************/
+    public function set_schedule(\App $App)
+    {
+        if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
+        $categoryModel = new CategoryModel($App->db->getPdo());
+        if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
+        unset($_POST['id']);
 
+        $userRepository = new UserRepositoryDb($App->db);
+        $userSearch = new UserSearchDb($App->db);
 
+        // Category is tree inclusive
+        $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
 
-/************
- * SCHEDULE *
- ************/
-case 'set_schedule':
-    if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
-    $categoryModel = new CategoryModel($dbh);
-    if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
-    unset($_POST['id']);
+        $user_ids = array();
 
-    $userRepository = new UserRepositoryDb($Db);
-    $userSearch = new UserSearchDb($Db);
-
-    // Category is tree inclusive
-    $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
-
-    $user_ids = array();
-
-    foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
-    if ($user_ids && !$userRepository->setSchedule($user_ids,$_POST)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
-    return array('textStatus' => 'ok');
-break;
-
-
-/***********
- * ACL ADD *
- ***********/
-case 'acl_add':
-    if (!$_POST) return;
-    if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
-    $categoryModel = new CategoryModel($dbh);
-    if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
-
-    // POST comes as JSON UTF-8 encoded
-    $_POST = array_map('utf8_decode', $_POST);
-
-    // Easiest way
-    // get ACL
-    $acl = $categoryAclRepository->getCategory($id, $categoryModel, false);
-    // delete them from DB
-    $categoryAclRepository->delCategory($id);
-
-    // Append the new permission
-    $acl[] = array(
-        'category_id' => $id,
-        'allow' => $_POST['allow'],
-        'module' => $_POST['module'],
-        'action' => @$_POST['module_action'],
-        'action_filter_criteria' => @$_POST['action_filter_criteria'],
-        'action_filter_value' => @$_POST['action_filter_value']
-    );
-    // Combine them and save them altogether to DB
-    if (!$categoryAclRepository->saveCategory($id, $categoryAclRepository->assocToArray($categoryAclRepository->combine($acl)))) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_add'));
-
-    return array('textStatus' => 'ok', 'acl_data' => $categoryAclRepository->assocToArray($categoryAclRepository->getCategory($id, $categoryModel)));
-break;
-
-
-/***********
- * ACL DEL *
- ***********/
-case 'acl_del':
-    if (!($id = $App->request->fetch('id')) || !is_numeric($id)) return array('fatal_error' => 'id_invalid');
-    if (!($permission = $categoryAclRepository->getCategoryPermission($id))) return array('fatal_error' => 'id_not_found');
-
-    if ($App->request->fetch('confirm')) {
-        if (!$categoryAclRepository->delCategoryPermission($id)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_del'));
-        return array('textStatus' => 'ok', 'acl_data' => $categoryAclRepository->assocToArray($categoryAclRepository->getCategory($permission['category_id'], new CategoryModel($dbh))));
+        foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
+        if ($user_ids && !$userRepository->setSchedule($user_ids,$_POST)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
+        return array('textStatus' => 'ok');
     }
 
-break;
+    /***********
+     * ACL ADD *
+     ***********/
+    public function acl_add(\App $App)
+    {
+        if (!$_POST) return [];
 
+        return [];
 
-/************************
- * NON WORKING DAYS ADD *
- ************************/
-case 'non_working_days_add':
-    if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
-    $categoryModel = new CategoryModel($dbh);
-    if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
-    unset($_POST['id']);
+        if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
+        $categoryModel = new CategoryModel($App->db->getPdo());
+        if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
+        $categoryAclRepository = new CategoryAclRepositoryDb($App->db->getPdo());
 
-    $userNwdRepository = new UserNwdRepositoryDb($Db);
-    $userSearch = new UserSearchDb($Db);
+        // POST comes as JSON UTF-8 encoded
+        $_POST = array_map('utf8_decode', $_POST);
 
-    // Category is tree inclusive
-    $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
+        // Easiest way
+        // get ACL
+        $acl = $categoryAclRepository->getCategory($id, $categoryModel, false);
+        // delete them from DB
+        $categoryAclRepository->delCategory($id);
 
-    $user_ids = array();
+        // Append the new permission
+        $acl[] = array(
+            'category_id' => $id,
+            'allow' => $_POST['allow'],
+            'module' => $_POST['module'],
+            'action' => @$_POST['module_action'],
+            'action_filter_criteria' => @$_POST['action_filter_criteria'],
+            'action_filter_value' => @$_POST['action_filter_value']
+        );
+        // Combine them and save them altogether to DB
+        if (!$categoryAclRepository->saveCategory($id, $categoryAclRepository->assocToArray($categoryAclRepository->combine($acl)))) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_add'));
 
-    unset($_POST['to_setter']);
-    foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
-    if ($user_ids && !$userNwdRepository->save($_POST, $user_ids)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
-    return array('textStatus' => 'ok');
-break;
+        return array('textStatus' => 'ok', 'acl_data' => $categoryAclRepository->assocToArray($categoryAclRepository->getCategory($id, $categoryModel)));
+    }
 
+    /***********
+     * ACL DEL *
+     ***********/
+    public function acl_del(\App $App)
+    {
+        return [];
 
-/************************
- * NON WORKING DAYS DEL *
- ************************/
-case 'non_working_days_del':
-    if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
-    $categoryModel = new CategoryModel($dbh);
-    if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
-    unset($_POST['id']);
+        if (!($id = $App->request->fetch('id')) || !is_numeric($id)) return array('fatal_error' => 'id_invalid');
+        if (!($permission = $categoryAclRepository->getCategoryPermission($id))) return array('fatal_error' => 'id_not_found');
 
-    $userNwdRepository = new UserNwdRepositoryDb($Db);
-    $userSearch = new UserSearchDb($Db);
+        if ($App->request->fetch('confirm')) {
+            if (!$categoryAclRepository->delCategoryPermission($id)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_del'));
+            return array('textStatus' => 'ok', 'acl_data' => $categoryAclRepository->assocToArray($categoryAclRepository->getCategory($permission['category_id'], new CategoryModel($App->db->getPdo()))));
+        }
+    }
 
-    // Category is tree inclusive
-    $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
+    /************************
+     * NON WORKING DAYS ADD *
+     ************************/
+    public function non_working_days_add(\App $App)
+    {
+        if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
+        $categoryModel = new CategoryModel($App->db->getPdo());
+        if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
+        unset($_POST['id']);
 
-    $user_ids = array();
+        $userNwdRepository = new UserNwdRepositoryDb($App->db);
+        $userSearch = new UserSearchDb($App->db);
 
-    foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
+        // Category is tree inclusive
+        $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
 
-    if ($user_ids && !$userNwdRepository->delByUserIds($user_ids)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
-    return array('textStatus' => 'ok');
-break;
+        $user_ids = array();
+
+        unset($_POST['to_setter']);
+        foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
+        if ($user_ids && !$userNwdRepository->save($_POST, $user_ids)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
+        return array('textStatus' => 'ok');
+    }
+
+    /************************
+     * NON WORKING DAYS DEL *
+     ************************/
+    public function non_working_days_del(\App $App)
+    {
+        if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
+        $categoryModel = new CategoryModel($App->db->getPdo());
+        if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
+        unset($_POST['id']);
+
+        $userNwdRepository = new UserNwdRepositoryDb($App->db);
+        $userSearch = new UserSearchDb($App->db);
+
+        // Category is tree inclusive
+        $category_ids = array_merge(array($id),$categoryModel->getChildrenIds($id));
+
+        $user_ids = array();
+
+        foreach ($userSearch->get('u.id',array('category' => $category_ids)) as $row) $user_ids[] = $row['id'];
+
+        if ($user_ids && !$userNwdRepository->delByUserIds($user_ids)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_mod'));
+        return array('textStatus' => 'ok');
+    }
 }
+return;

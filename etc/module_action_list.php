@@ -5,7 +5,12 @@ $cfg['modules'] = [
         'add',
         'mod',
         'del',
-        'view'
+        'view',
+        'set_schedule',
+        'acl_add',
+        'acl_del',
+        'non_working_days_add',
+        'non_working_days_del',
     ],
     'user' => [
         'login',

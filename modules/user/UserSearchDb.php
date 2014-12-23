@@ -72,6 +72,8 @@ class UserSearchDb implements UserSearchInterface
         list($order_by, $order_dir) = array_pad(explode(' ', $order),2,null);
 
         switch ($order_by) {
+            case 'category'  : $order_by = 'u.cat_names '.($order_dir?:null); break;
+            case 'cc_category'  : $order_by = 'u.cc_cat_names '.($order_dir?:null); break;
             case 'fullname'  : $order_by = 'u.last_name '.($order_dir?:null).', u.name '.($order_dir?:null); break;
             default          : $order_by = $order_by . ' ' . $order_dir;
         }
