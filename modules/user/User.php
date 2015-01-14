@@ -31,7 +31,6 @@ class User extends \ModelObject
     ;
 
     protected $_validator = [
-        'user'      => ['not_null'],
         'name'      => ['not_null'],
         'last_name' => ['not_null'],
         'dni'       => ['not_null'],

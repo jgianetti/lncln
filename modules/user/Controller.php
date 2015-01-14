@@ -520,7 +520,9 @@ class Controller {
         // Delete old Picture
         if ($App->request->fetch('image_delete') && file_exists(APP_ROOT . 'uploads/user/_pub/'.$id.'.png')) unlink(APP_ROOT . 'uploads/user/_pub/'.$id.'.png');
 
-        if (!$this->saveImage($App, $id)) return ['textStatus' => 'error', 'errors' => ['image' => 'error_file_upload']];
+        if (($image = $App->request->files('image')) && $image['name']) {
+            if (!$this->saveImage($image, $id)) return ['textStatus' => 'error', 'errors' => ['image' => 'error_file_upload']];
+        }
         return ['textStatus' => 'ok', 'id' => $id];
     }
 
@@ -548,10 +550,8 @@ class Controller {
     /**************
      * SAVE IMAGE *
      **************/
-    private function saveImage(\App $App, $id) {
-        if (!$id || !($image = $App->request->files('image'))) return false;
-
-        if (!$image['size'] || $image['error']) return false;
+    private function saveImage($image = null, $id = null) {
+        if (!$id || !$image || !$image['size'] || $image['error']) return false;
 
         $pic = new Image($image['tmp_name']);
         $pic->scaleToTarget(200,200);
