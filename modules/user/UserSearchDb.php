@@ -62,7 +62,10 @@ class UserSearchDb implements UserSearchInterface
         if (!empty($search_data['email']))       $this->db->where('u.email LIKE ?')->stmt_values('%'.$search_data['email'].'%');
         if (!empty($search_data['barcode']))     $this->db->where('u.barcode LIKE ?')->stmt_values('%'.$search_data['barcode'].'%');
         if (isset($search_data['in_school']) && $search_data['in_school'] != '') $this->db->where('u.in_school',$search_data['in_school'] ? 1 : 0);
-        if (isset($search_data['deleted']) && $search_data['deleted'] != '') $this->db->where('u.deleted',$search_data['deleted'] ? 1 : 0);
+        if (isset($search_data['deleted'])) {
+            if ($search_data['deleted']) $this->db->where('u.deleted', 1);
+            else $this->db->where('u.deleted = 0 OR u.deleted IS NULL');
+        }
         return $this;
     }
 
