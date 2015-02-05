@@ -29,7 +29,7 @@ class RfidModel
             ($limit ? ' LIMIT ' . $limit : '')
         ;
 
-//        echo $sql;
+        //echo $sql;
         $stmt = $this->db->prepare($sql);
         $stmt->execute($where['values']);
         return $stmt->fetchAll();
@@ -70,7 +70,7 @@ class RfidModel
     {
         $search_data = $this->sanitizeSearchData($search_data);
         $stmt_values = array();
-        $where = ' u.deleted = 0 ';
+        $where = ' (u.deleted = 0 || u.deleted IS NULL) ';
 
         if (isset($search_data['id'])) {
             // allows to search among multiple ids
@@ -137,8 +137,13 @@ class RfidModel
         }
 
         if (isset($search_data['deleted'])) {
-            $where .= ' AND u_m.deleted = ? ';
-            $stmt_values[] = $search_data['deleted'];
+            if ($search_data['deleted']) {
+                $where .= ' AND u_m.deleted = ? ';
+            }
+            else {
+                $where .= ' AND (u_m.deleted = ? OR u_m.deleted IS NULL)';
+                $stmt_values[] = $search_data['deleted'];
+            }
         }
 
         return array('sql' => $where, 'values' => $stmt_values);
@@ -365,6 +370,7 @@ class RfidModel
             $row['is_entering'] = ((isset($row['is_entering'])) ? intval($row['is_entering']) : null);
             $row['deleted']     = ((isset($row['deleted'])) ? intval($row['deleted']) : null);
             $row['user_img']    = file_exists(APP_ROOT . 'uploads/user/_pub/'.$row['user_id'].'.png');
+
             $row['comments']    = ((isset($row['comments']) && $row['comments']) ? nl2br($row['comments']) : null);
             $row                = sanitizeToJson($row);
         }
