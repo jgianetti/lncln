@@ -146,7 +146,7 @@ $html .= '</ul>';
  * USER NAME *
  *************/
 
-$html .= '<span class="user-name">' . $session_user['last_name'] . ', ' . $session_user['name'] . '</span>';
+$html .= '<span class="user-name">' . $session_user['last_name'] . ', ' . $session_user['name'] . ' | </span>';
 
 
 /***********
