@@ -23,7 +23,7 @@ var App = (function (my) {
                 if (data._user && data._user['can_close']) user_permission['can_close'] = 1;
                 else user_permission['can_close'] = 0;
 
-                var theaders = ['order_num', 'opened_on', 'closed_on', 'cc_supplier_name', 'cc_product_name', 'status', 'comments', 'deleted'];
+                var theaders = ['order_num', 'opened_on', 'closed_on', 'cc_supplier_name', 'cc_product_name', /*'status',*/ 'comments', 'deleted'];
                 var $table = App.buildDataTable(theaders, Globalize.localize('cc_purchase'), 'af'); // headers, lang, build footer
 
                 $('#main').html(
@@ -88,6 +88,7 @@ var App = (function (my) {
                              quantity":100,"unit_price":"5.00","quantity_delivered":0,"id":"26","name":"Broches para abrochadora Swingline","deposit":"01","family":"01","item":"073","brand":"02","size":"00","color":"00","barcode":"74711351089","measurement_unit":"( )","comments":" ","deleted":"0","deleted_on":" ","deleted_by":" "}],"_total":500}
                              */
                         },
+                        /*
                         { "aTargets": [ 5 ], // status
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') {
@@ -100,22 +101,24 @@ var App = (function (my) {
                                 return source.status;
                             }
                         },
-                        { "aTargets": [ 6 ], "mData": "comments" },
-                        { "aTargets": [ 7 ], // deleted
+                        */
+                        { "aTargets": [ 5 ], "mData": "comments" },
+                        { "aTargets": [ 6 ], // deleted
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') { return parseInt(source.deleted)?Globalize.localize('_base')['yes']:Globalize.localize('_base')['no'] }
                                 return source.deleted;
                             }
                         },
-                        { "aTargets": [ 8 ], // Action
+                        { "aTargets": [ 7 ], // Action
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') {
                                     var html = '';
+                                    /*
                                     if (parseInt(source.status) < 2 && user_permission['can_close']) html = '<a class="ui-state-default ui-corner-all app-btn" onclick="App.modules.cc_purchase.search.close('+source.id+', $(this).closest(\'tr\'))" title="'+Globalize.localize('cc_purchase')['close']+'"><span class="ui-icon ui-icon-check">'+Globalize.localize('cc_purchase')['close']+'</span></a> ';
                                     else if (parseInt(source.status) < 1 && user_permission['can_approve']) html = '<a class="ui-state-default ui-corner-all app-btn" onclick="App.modules.cc_purchase.search.approve('+source.id+', $(this).closest(\'tr\'))" title="' + Globalize.localize('cc_purchase')['approve'] + '"><span class="ui-icon ui-icon-check">' + Globalize.localize('cc_purchase')['approve'] + '</span></a> ';
-
+                                    */
                                     html += '<a class="ui-state-default ui-corner-all app-btn" href="'+App.url_base+'/cc_purchase/mod/?id='+source.id+'" data-ajax="1" title="'+Globalize.localize('_base')['mod']+'"><span class="ui-icon ui-icon-pencil">'+Globalize.localize('_base')['mod']+'</span></a> ' + 
                                             '<a class="ui-state-default ui-corner-all app-btn" href="'+App.url_base+'/cc_purchase/del/?id='+source.id+'" data-ajax-callback="del" data-push-state="0" title="'+Globalize.localize('_base')['del']+'"><span class="ui-icon ui-icon-closethick">'+Globalize.localize('_base')['del']+'</span></a>';
                                     return html;
@@ -141,11 +144,13 @@ var App = (function (my) {
                             { type: "date-range" }, // closed_on
                             { type: "text" }, // cc_supplier
                             { type: "text" }, // cc_products
+                            /*
                             { type: "select", values: [ // status
                                 { "value":"0","label":Globalize.localize('cc_purchase')['open'] },
                                 { "value":"1","label":Globalize.localize('cc_purchase')['approved'] },
                                 { "value":"2","label":Globalize.localize('cc_purchase')['closed'] }
                             ] },
+                            */
                             null, // comments
                             { type: "select", values: [ // deleted
                                 { "value":"0","label":Globalize.localize('_base')['no'] },

@@ -16,6 +16,9 @@ class Controller
      **********/
     public function search(\App $App)
     {
+        // @todo: REMOVER
+        $App->db->exec('UPDATE cc_purchase SET closed_on = opened_on, closed_by = opened_by, status = 2 WHERE closed_on IS NULL');
+
         $session_user = $App->session->get('user');
         $user_permission = array();
         // Olivera, Matias
@@ -145,12 +148,12 @@ class Controller
                 $post = $_POST;
                 // POST comes as JSON UTF-8 encoded
                 $session_user = $App->session->get('user');
-                $post['opened_by'] = $session_user['id'];
-                $post['closed_on'] = $post['closed_by'] = null;
-
-                $post['comments'] = utf8_decode($post['comments']);
+                $post['opened_by'] = $post['closed_by'] = $session_user['id'];
+                $post['comments']  = utf8_decode($post['comments']);
 
                 if (!$cc_purchaseModel->add($post)) $errors["add_error"] = '';
+
+                /*
                 else {
                     // Mailer
                     $mailer = new_PHPMailer($App->cfg['smtp']);
@@ -163,6 +166,7 @@ class Controller
                     $mailer->Body .= '<a href="http://' . $_SERVER['SERVER_NAME'] . $App->cfg['base_url'] . '/cc_purchase/view/' . $id . '">Ver Compra</a>.';
                     $mailer->send();
                 }
+                */
             }
 
             if ($errors) return array('textStatus' => 'error', 'errors' => $errors);
@@ -261,6 +265,7 @@ class Controller
                 else $post['closed_by'] = $cc_purchase['closed_by'];
 
                 if (!$cc_purchaseModel->mod($post)) $errors["mod_error"] = '';
+                /*
                 elseif ($post['status'] < 2) {
                     // Mailer
                     $mailer          = new_PHPMailer($App->cfg['smtp']);
@@ -273,6 +278,7 @@ class Controller
                     $mailer->Body .= '<a href="http://' . $_SERVER['SERVER_NAME'] .$App->cfg['base_url'] . '/cc_purchase/view/' . $id . '">Ver Compra</a>.';
                     $mailer->send();
                 }
+                */
             }
 
             if ($errors) return array('textStatus' => 'error', 'errors' => $errors);
@@ -314,6 +320,7 @@ class Controller
 
         if (!$cc_purchaseModel->set_status($id, $data)) return array('textStatus' => 'error', 'errors' => array("mod_error" => ''));
 
+        /*
         if ($data['status'] == 1) {
             // Mailer
             $mailer          = new_PHPMailer($App->cfg['smtp']);
@@ -326,6 +333,7 @@ class Controller
             $mailer->Body .= '<a href="http://' . $_SERVER['SERVER_NAME'] . $App->cfg['base_url'] . '/cc_purchase/view/' . $id . '">Ver Compra</a>.';
             $mailer->send();
         }
+        */
 
         return array('textStatus' => 'ok', 'closed_on' => $data['closed_on'], 'closed_by' => $session_user['last_name'].', '.$session_user['name']);
 
