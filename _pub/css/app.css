@@ -279,3 +279,10 @@ table.user-print-in-school th, table.user-print-in-school td {
     text-align: right;
 }
 
+#footer {
+    margin-top: 1em;
+    padding-top: .8em;
+    clear: both;
+    border-top: 1px dotted #ccc;
+    text-align: center;
+}

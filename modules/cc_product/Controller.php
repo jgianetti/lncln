@@ -9,9 +9,6 @@ class Controller
      **********/
     public function search(\App $App)
     {
-        // @todo: REMOVER
-        $App->db->exec('UPDATE cc_purchase SET closed_on = opened_on, closed_by = opened_by, status = 2 WHERE closed_on IS NULL');
-
         $return = array();
 
         // datatable headers

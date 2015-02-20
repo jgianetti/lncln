@@ -36,7 +36,7 @@ $session_user = $session->get('user');
         <?php if (isset($controller_return) && isset($controller_return['_view'])) include('modules/'.$request->getModule() . '/' . $controller_return['_view'] . '.php'); ?>
     </div>
     
-    <div id="footer">
+    <div id="footer">Asociaci&oacute;n Escuelas Lincoln<br>ver. <?php echo APP_VERSION .' ('.date('d/m/Y',filemtime('etc/constants.php')).')'; ?>
     </div>
 </div>
 <div id="cache">

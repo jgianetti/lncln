@@ -150,11 +150,6 @@ class CC_PurchaseModel extends \DbDataMapper
             }
         }
 
-        if (isset($search_data['status'])) {
-            $where .= ' AND cc_p.status=? ';
-            $stmt_values[] = $search_data['status'];
-        }
-
         if (isset($search_data['deleted'])) {
             $where .= ' AND cc_p.deleted=? ';
             $stmt_values[] = $search_data['deleted'];
@@ -225,8 +220,8 @@ class CC_PurchaseModel extends \DbDataMapper
 
         try {
             // update cc_purchase
-            $stmt_values = array($row['cc_supplier_id'], $row['opened_on'], $row['opened_by'], $row['closed_on'], $row['closed_by'], $row['order_num'], $row['comments'], $row['status'], $row['deleted'], $row['id']);
-            $stmt = $this->prepare('UPDATE `cc_purchase` SET `cc_supplier_id`=?, `opened_on`=?, `opened_by`=?, `closed_on`=?, `closed_by`=?, `order_num`=?, `comments`=?, `status`=?, `deleted`=? WHERE `id`=?');
+            $stmt_values = array($row['cc_supplier_id'], $row['opened_on'], $row['opened_by'], $row['closed_on'], $row['closed_by'], $row['order_num'], $row['comments'], $row['deleted'], $row['id']);
+            $stmt = $this->prepare('UPDATE `cc_purchase` SET `cc_supplier_id`=?, `opened_on`=?, `opened_by`=?, `closed_on`=?, `closed_by`=?, `order_num`=?, `comments`=?, `deleted`=? WHERE `id`=?');
             $stmt->execute($stmt_values);
 
             // remove products without quantity
@@ -264,25 +259,6 @@ class CC_PurchaseModel extends \DbDataMapper
             return false;
         }
         $this->commit();
-        return true;
-    }
-
-    public function set_status($id, $data)
-    {
-        $this->beginTransaction();
-
-        try {
-            // cc_purchase table
-            $stmt = $this->prepare('UPDATE `cc_purchase` SET `status`=?, `closed_on`=?, `closed_by`=? WHERE `id`=?');
-            $stmt_values = array($data['status'], $data['closed_on'], $data['closed_by'], $id);
-            $stmt->execute($stmt_values);
-            $this->commit();
-        }
-        catch (\PDOException $e) {
-            //echo $e->getMessage();
-            $this->rollBack();
-            return false;
-        }
         return true;
     }
 
@@ -393,8 +369,6 @@ class CC_PurchaseModel extends \DbDataMapper
 
         if (isset($search_data['order_num']) && is_numeric($search_data['order_num'])) $return['order_num'] = $search_data['order_num'];
 
-        if (isset($search_data['status']) && is_numeric($search_data['status'])) $return['status'] = $search_data['status'];
-
         if (isset($search_data['deleted']) && is_numeric($search_data['deleted'])) $return['deleted'] = $search_data['deleted'];
 
         if (isset($search_data['cc_product_id']) && is_numeric($search_data['cc_product_id'])) $return['cc_product_id'] = $search_data['cc_product_id'];
@@ -449,12 +423,6 @@ class CC_PurchaseModel extends \DbDataMapper
             $row['opened_on'] = date('d/m/Y',strtotime($row['opened_on']));
             if ($row['closed_on']) $row['closed_on'] = date('d/m/Y',strtotime($row['closed_on']));
             $row['deleted'] = intval($row['deleted']);
-
-            switch ($row['status']) {
-                case 0: $row['_status_open'] = 1;break;
-                case 1: $row['_status_to_approve'] = 1;break;
-                case 2: $row['_status_closed'] = 1;break;
-            }
 
             $row = sanitizeToJson($row);
        }

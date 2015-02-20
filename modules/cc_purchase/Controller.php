@@ -16,9 +16,6 @@ class Controller
      **********/
     public function search(\App $App)
     {
-        // @todo: REMOVER
-        $App->db->exec('UPDATE cc_purchase SET closed_on = opened_on, closed_by = opened_by, status = 2 WHERE closed_on IS NULL');
-
         $session_user = $App->session->get('user');
         $user_permission = array();
         // Olivera, Matias
@@ -29,7 +26,7 @@ class Controller
         $return = array();
 
         // datatable headers
-        if (!$App->request->fetch('theaders')) $theaders = array('order_num', 'opened_on', 'closed_on', 'cc_supplier_name', 'cc_product_name', 'status', 'comments', 'deleted');
+        if (!$App->request->fetch('theaders')) $theaders = array('order_num', 'opened_on', 'closed_on', 'cc_supplier_name', 'cc_product_name', 'comments', 'deleted');
         else $theaders = explode(',',$App->request->fetch('theaders'));
 
         $search_data = array();
@@ -265,20 +262,6 @@ class Controller
                 else $post['closed_by'] = $cc_purchase['closed_by'];
 
                 if (!$cc_purchaseModel->mod($post)) $errors["mod_error"] = '';
-                /*
-                elseif ($post['status'] < 2) {
-                    // Mailer
-                    $mailer          = new_PHPMailer($App->cfg['smtp']);
-                    $mailer->isHTML(true);
-                    $mailer->Subject = $this->_cfg['mailer'][$post['status']]['subject'];
-                    $mailer->Body    = $this->_cfg['mailer'][$post['status']]['body'];
-                    foreach ($this->_cfg['mailer'][$post['status']]['recipients'] as $recipient) {
-                        $mailer->AddAddress($recipient['email'], (isset($recipient['name'])?$recipient['name']:null));
-                    }
-                    $mailer->Body .= '<a href="http://' . $_SERVER['SERVER_NAME'] .$App->cfg['base_url'] . '/cc_purchase/view/' . $id . '">Ver Compra</a>.';
-                    $mailer->send();
-                }
-                */
             }
 
             if ($errors) return array('textStatus' => 'error', 'errors' => $errors);
@@ -287,57 +270,6 @@ class Controller
 
     }
 
-    /**************
-     * SET STATUS *
-     **************/
-    public function set_status(\App $App)
-    {
-        $session_user = $App->session->get('user');
-        $user_permission = array();
-        // Olivera, Matias
-        if ($session_user['id'] == '4e31ab94dbe6d') $user_permission['can_approve'] = 1;
-        // Olivera, Matias
-        if ($session_user['id'] == '4e31ab94dbe6d') $user_permission['can_close'] = 1;
-
-        // id == hex number
-        if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
-
-        // fetch data from db
-        $cc_purchaseModel = new CC_PurchaseModel($App->db->getPdo());
-        $session_user = $App->session->get('user');
-
-        $data = array();
-        $data['status'] = $App->request->fetch('status');
-
-        if ($data['status'] == 2) {
-            $data['closed_on'] = date('Y-m-d H:i:s');
-            $data['closed_by'] = $session_user['id'];
-        }
-        else {
-            $data['closed_on'] = null;
-            $data['closed_by'] = null;
-        }
-
-        if (!$cc_purchaseModel->set_status($id, $data)) return array('textStatus' => 'error', 'errors' => array("mod_error" => ''));
-
-        /*
-        if ($data['status'] == 1) {
-            // Mailer
-            $mailer          = new_PHPMailer($App->cfg['smtp']);
-            $mailer->isHTML(true);
-            $mailer->Subject = $this->_cfg['mailer'][1]['subject'];
-            $mailer->Body    = $this->_cfg['mailer'][1]['body'];
-            foreach ($this->_cfg['mailer'][1]['recipients'] as $recipient) {
-                $mailer->AddAddress($recipient['email'], (isset($recipient['name'])?$recipient['name']:null));
-            }
-            $mailer->Body .= '<a href="http://' . $_SERVER['SERVER_NAME'] . $App->cfg['base_url'] . '/cc_purchase/view/' . $id . '">Ver Compra</a>.';
-            $mailer->send();
-        }
-        */
-
-        return array('textStatus' => 'ok', 'closed_on' => $data['closed_on'], 'closed_by' => $session_user['last_name'].', '.$session_user['name']);
-
-    }
 
     /*******
      * DEL *
