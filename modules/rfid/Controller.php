@@ -22,7 +22,6 @@ class Controller
         $categoryModel      = new CategoryModel($App->db->getPdo());
         $acl                = new AclHelper($App->db);
 
-
         $session_user       = $App->session->get('user');
 
         // ACL FILTERS
@@ -36,13 +35,14 @@ class Controller
 
         $return = array();
         
-            // jQuery datatable headers
-        if (!$App->request->fetch('theaders')) $theaders = array('image', 'fullname', 'date', 'is_early', 'is_entering', 'entrance', 'category', 'deleted', 'comments');
+        // jQuery datatable headers
+        if (!$App->request->fetch('theaders')) $theaders = ['image', 'fullname', 'date', 'time', 'is_early', 'is_entering', 'entrance', 'category', 'deleted', 'comments'];
+
         else $theaders = explode(',', $App->request->fetch('theaders'));
         
         $filters = array();
         
-            // jQuery datatable filters
+        // jQuery datatable filters
         if (is_null($App->request->fetch('sEcho')))
         {
             $return['categories'] = array();
@@ -50,13 +50,28 @@ class Controller
             $return['entrances'] = $entrances;
             $filters['date_from'] = date('Y-m-d', strtotime('-1 day'));
         }
+
+        // filters
+        for ($i = 0; $i < count($theaders); $i++) {
+            $filters[$theaders[$i]] = $App->request->fetch('sSearch_' . $i);
+        }
+
+        // User movements
+        if ($App->request->fetch('user_id')) {
+            $filters['user_id'] = $App->request->fetch('user_id');
+        }
+
+        if (!is_null($App->request->fetch('is_entering'))) {
+            $filters['is_entering'] = $App->request->fetch('is_entering');
+        }
+
+        if (!is_null($App->request->fetch('deleted'))) {
+            $filters['deleted'] = $App->request->fetch('deleted');
+        }
         
-        for ($i = 0; $i < count($theaders); $i++) $filters[$theaders[$i]] = $App->request->fetch('sSearch_' . $i);
-        if ($App->request->fetch('user_id')) $filters['user_id'] = $App->request->fetch('user_id');
-        if (!is_null($App->request->fetch('is_entering'))) $filters['is_entering'] = $App->request->fetch('is_entering');
-        if (!is_null($App->request->fetch('deleted'))) $filters['deleted'] = $App->request->fetch('deleted');
-        
-        if (is_null($order_by = $App->request->fetch('iSortCol_0'))) $order_by = 'u_m.date DESC';
+        if (is_null($order_by = $App->request->fetch('iSortCol_0'))) {
+            $order_by = 'u_m.date DESC';
+        }
         else {
             $order_by = $theaders[$order_by];
             if (in_array($order_by, array('date', 'comments'))) $order_by = 'u_m.' . $order_by;
@@ -71,7 +86,7 @@ class Controller
         
         
         if (!empty($filters['category'])) $filters['category'] = array_merge(array($filters['category']), $categoryModel->getChildrenIds($filters['category']));
-        
+
         // ACL FILTERS
         //$filters = $userAclRepository->getFilters($filters, $categories);
         //if ($userAclRepository->selfOnly($session_user['acl'], 'rfid', 'search')) $filters['user_id'] = $session_user['id'];
