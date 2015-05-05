@@ -419,7 +419,7 @@ var App = (function (my) {
                             "mData": function ( source, type, val ) {
                                 var html = '';
                                 if (type === 'display') {
-                                    if (source.user_work_shift_id != ' ') {
+                                    if (source.user_work_shift_id) {
                                         var expected_start  = new Date(source.shift_expected_start);
                                         var started_on      = new Date(source.shift_started_on);
                                         var expected_end    = new Date(source.shift_expected_end);
