@@ -458,6 +458,8 @@ $(function(){
     // jQuery UI autocomplete render item
     jQueryAutocompleteMonkeyPatch();
 
+    var dataTablesTimer;
+
     // dataTables default settings
     $.extend( $.fn.dataTable.defaults, {
         "sDom" : 'Tlrtip',
@@ -469,16 +471,21 @@ $(function(){
         "bProcessing": true,
         "bDeferRender": true,
         "fnServerData": function ( sSource, aoData, fnCallback ) {
-            aoData.push( { "name": "ajax", "value": 1 } );
-            aoData.push( { "name": "data_type", "value": "json" } );
-            $.getJSON( sSource, aoData, function (json) {
-                if (json.textStatus && json.textStatus == 'error') {
-                    App.errorsDialog(json.errors);
-                    App.ajaxDataProcessComplete();
-                    return;
-                }
-                fnCallback(json)
-            } );
+            window.clearTimeout(dataTablesTimer);
+
+            dataTablesTimer = window.setTimeout(function() {
+                aoData.push( { "name": "ajax", "value": 1 } );
+                aoData.push( { "name": "data_type", "value": "json" } );
+
+                $.getJSON( sSource, aoData, function (json) {
+                    if (json.textStatus && json.textStatus == 'error') {
+                        App.errorsDialog(json.errors);
+                        App.ajaxDataProcessComplete();
+                        return;
+                    }
+                    fnCallback(json)
+                } );
+            }, 250);
         }
     });
     TableTools.DEFAULTS.sSwfPath = App.url_base+"/_pub/js/jquery.dataTables.TableTools.copy_csv_xls.swf";
