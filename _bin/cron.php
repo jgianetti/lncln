@@ -106,6 +106,13 @@ foreach ($crontab as $file) require_once('_bin/cron.'.$file.'.php');
  * MAIL *
  ********/
 if ($files_to_unlink && !DEBUG) {
-    if (!$mailer->send()) error_log('CRON :: Message could not be sent :: '.$mailer->ErrorInfo);
-    foreach ($files_to_unlink as $f_name) unlink($f_name);
+    if ($cfg['smtp']['host']) {
+        if (!$mailer->send()) {
+            error_log('CRON :: Message could not be sent :: '.$mailer->ErrorInfo);
+        }
+    }
+
+    foreach ($files_to_unlink as $f_name) {
+        unlink($f_name);
+    }
 }
