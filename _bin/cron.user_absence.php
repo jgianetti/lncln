@@ -21,6 +21,21 @@ $attach_body = "sep=\t\r\n";
 $db = new DbDataMapper($dbh);
 
 try{
+    /*
+     * Selecciona usuarios que no hayan registrado movimientos el dia anterior
+     * Trae:
+     *   - el usuario,
+     *   - su horario del dia anterior y
+     *   - su inasistencia mas reciente. Permite comparar y evitar cargar 2 veces la misma inasistencia
+     *
+     * Siempre que:
+     *   - su horario del dia anterior no sea nulo
+     *   - el dia anterior no sea una excepcion (se considera excepcion si se le modifico el horario el dia de hoy)
+     *   - el dia anterior no tuvo un movimiento que perteneciera a un turno.
+     *     (puede que haya tenido un movimiento pero que no corresponda al turno del dia (ie: salida del turno noche))
+     *   - el dia anterior no era un dia "no laboral" (aka: era un dia laboral)
+     */
+
     $sql = ' SELECT u.*,
                  u_a.id AS user_absence_id,
                  u_a.date AS user_absence_date
