@@ -47,7 +47,7 @@ try{
                 GROUP BY user_id
              ) AS u_a ON (u_a.user_id = u.id)
              WHERE
-                    u.deleted = 0
+                    (u.deleted = 0 OR u.deleted IS NULL)
                 AND
                     u_s.'.date('l', YESTERDAY).'_in IS NOT NULL
                 AND ( u_s.exception IS NULL OR u_s.exception != "'.date('Y-m-d', YESTERDAY).'" )
