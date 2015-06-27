@@ -21,18 +21,34 @@ class AclSearchDb
      */
     public function getCategories($ids, $combined = true)
     {
-        return $this->db->prepareFetchAll('
-            SELECT a_c.*,
-                inherited.id AS inherited_id,
-                inherited.name AS inherited_name,
+        $result = [];
+
+        if (is_string($ids)) {
+            $ids = explode(',', str_replace(' ', '', $ids));
+        }
+
+        // Select ACL + inherited cat + Cat fields
+        $stmt = $this->db->prepare('
+            SELECT c_acl.*,
+                IF (c_acl.category_id = ?, NULL, inherited.id) AS inherited_id,
+                IF (c_acl.category_id = ?, NULL, inherited.name) AS inherited_name,
                 IF (action_filter_criteria = "category_id", cat.name, NULL) AS action_filter_value_label
-            FROM category_acl AS a_c
-            LEFT JOIN category AS inherited ON inherited.id = a_c.category_id
-            LEFT JOIN category AS cat ON cat.id = a_c.category_id
+            FROM category_acl AS c_acl
+            LEFT JOIN category AS inherited ON inherited.id = c_acl.category_id
+            LEFT JOIN category AS cat ON cat.id = c_acl.category_id
             WHERE
-                a_c.category_id IN(' . implode(',', array_fill(0, count($ids), '?')) . ')
+                c_acl.category_id = ?
             ORDER BY module, action, action_filter_criteria, action_filter_value_label
-        ', $ids);
+        ');
+
+        // foreach is simpler to bind $id to inherited
+        foreach ($ids as $id) {
+            $stmt->execute([$id, $id, $id]);
+            $result = array_merge($result, $stmt->fetchAll());
+        }
+
+        return $result;
+
     }
 
     public function getCategory($id) {

@@ -331,20 +331,30 @@ class Controller {
     /***********
      * ACL ADD *
      ***********/
-    /*
     public function acl_add(\App $App)
     {
-        if (!$_POST) return;
+        if (!$_POST) return [];
+
         if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return ['textStatus' => 'error', 'errors' => ['id_invalid']];
+
+        $userAclRepository = new UserAclRepositoryDb($App->db);
+        $categoryModel     = new CategorySearchDb($App->db);
+
+        /*
         $filters = array('id' => $id);
 
+        $session_user      = $App->session->get('user');
+        $userSearch        = new UserSearchDb($App->db);
+
         // ACL FILTERS
+        $categories        = $userAclRepository->getCategoriesAllowance($session_user, 'user', $App->request->getAction(), $categoryModel, 1);
+
         $filters = $userAclRepository->getFilters($filters, $categories);
         if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $id != $session_user['id'])
             || (!($users = $userSearch->get('u[id,name,last_name]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
-
+        */
 
         // POST comes as JSON UTF-8 encoded
         $_POST = array_map('utf8_decode', $_POST);
@@ -364,17 +374,22 @@ class Controller {
 
         return array('textStatus' => 'ok', 'acl_data' => $userAclRepository->getCombined($id, $categoryModel));
     }
-    */
+
 
     /***********
      * ACL DEL *
      ***********/
-    /*
     public function acl_del(\App $App)
     {
         if (!($id = $App->request->fetch('id')) || !is_numeric($id)) return array('fatal_error' => 'id_invalid');
+
+        $userAclRepository = new UserAclRepositoryDb($App->db);
+
         if (!($permission = $userAclRepository->getUserPermission($id))) return array('fatal_error' => 'id_not_found');
 
+        $categoryModel     = new CategorySearchDb($App->db);
+
+        /*
         $filters = array('id' => $permission['user_id']);
 
         // ACL FILTERS
@@ -383,13 +398,13 @@ class Controller {
             || (!($users = $userSearch->get('u[id,name,last_name]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
+        */
 
         if ($App->request->fetch('confirm')) {
             if (!$userAclRepository->delUserPermission($id)) return array('textStatus' => 'error', 'errors' => array('error_db' => 'error_del'));
             return array('textStatus' => 'ok', 'acl_data' => $userAclRepository->getCombined($permission['user_id'], $categoryModel));
         }
     }
-    */
 
 
 

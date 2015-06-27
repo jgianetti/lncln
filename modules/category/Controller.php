@@ -17,7 +17,7 @@ class Controller
     public function search(\App $App)
     {
         $aclSearch = new AclSearchDb($App->db);
-        $acl = new AclHelper($App->db);
+        $acl       = new AclHelper($App->db);
 
         $tabs = [];
         if ($acl->is_allowed($App->session->get('user')['acl'],'category.set_schedule')) $tabs['schedule'] = true;
@@ -172,12 +172,10 @@ class Controller
     {
         if (!$_POST) return [];
 
-        return [];
-
         if (!($id = $App->request->fetch('id')) || !ctype_xdigit($id)) return array('fatal_error' => 'id_invalid');
         $categoryModel = new CategoryModel($App->db->getPdo());
         if (!($category = $categoryModel->getById($id))) return array('fatal_error' => 'id_not_found');
-        $categoryAclRepository = new CategoryAclRepositoryDb($App->db->getPdo());
+        $categoryAclRepository = new CategoryAclRepositoryDb($App->db);
 
         // POST comes as JSON UTF-8 encoded
         $_POST = array_map('utf8_decode', $_POST);
@@ -208,9 +206,10 @@ class Controller
      ***********/
     public function acl_del(\App $App)
     {
-        return [];
-
         if (!($id = $App->request->fetch('id')) || !is_numeric($id)) return array('fatal_error' => 'id_invalid');
+
+        $categoryAclRepository = new CategoryAclRepositoryDb($App->db);
+
         if (!($permission = $categoryAclRepository->getCategoryPermission($id))) return array('fatal_error' => 'id_not_found');
 
         if ($App->request->fetch('confirm')) {

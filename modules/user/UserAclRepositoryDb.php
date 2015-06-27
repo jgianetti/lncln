@@ -5,6 +5,7 @@
  */
 namespace Jan_User;
 use Jan_Category\CategoryModel;
+use Jan_Category\CategorySearchDb ;
 
 //class UserAclRepositoryDb implements UserAclRepositoryInterface
 class UserAclRepositoryDb extends \AclRepository
@@ -70,11 +71,11 @@ class UserAclRepositoryDb extends \AclRepository
      * Get User Categories's ACL
      * A user may belong to multiple categories
      * @param $user_id
-     * @param CategoryModel $categoryModel
+     * @param CategorySearchDb $categoryModel
      * @param bool $combined
      * @return array
      */
-    public function getUserCategories($user_id, CategoryModel $categoryModel, $combined = true) // TODO: CategoryModelInterface
+    public function getUserCategories($user_id, CategorySearchDb  $categoryModel, $combined = true) // TODO: CategoryModelInterface
     {
         $category_ids = array();
         foreach ($this->db->select('category_id')->from('user_category AS u_c')->leftJoin('category AS cat', 'user_category', false)->where('u_c.user_id', $user_id)->prepareFetchAll() as $row) $category_ids[] = $row['category_id'];
@@ -103,10 +104,10 @@ class UserAclRepositoryDb extends \AclRepository
     /**
      * Get Categories & User's ACL combined as an associative array
      * @param $user_id
-     * @param CategoryModel $categoryModel - needed to get parents
+     * @param CategorySearchDb $CategorySearchDb - needed to get parents
      * @return array
      */
-    public function getCombinedAssoc($user_id, CategoryModel $categoryModel)
+    public function getCombinedAssoc($user_id, CategorySearchDb $categoryModel)
     {
         return $this->combine(array_merge($this->getUserCategories($user_id, $categoryModel, false), $this->getUser($user_id, false)));
     }
@@ -114,10 +115,10 @@ class UserAclRepositoryDb extends \AclRepository
     /**
      * Get Categories & User's ACL combined as an indexed array
      * @param $user_id
-     * @param CategoryModel $categoryModel
+     * @param CategorySearchDb $categoryModel
      * @return array
      */
-    public function getCombined($user_id, CategoryModel $categoryModel)
+    public function getCombined($user_id, CategorySearchDb $categoryModel)
     {
         return $this->assocToArray($this->getCombinedAssoc($user_id, $categoryModel));
     }
@@ -130,11 +131,11 @@ class UserAclRepositoryDb extends \AclRepository
      * @param array $user           : needed to get 'self' categories
      * @param string $module
      * @param string $action
-     * @param CategoryModel $categoryModel
+     * @param CategorySearchDb $categoryModel
      * @param string|bool $indent   : Correct indentation is possible only when the whole tree is analyzed - not afterwards
      * @return array
      */
-    public function getCategoriesAllowance($user, $module, $action, CategoryModel $categoryModel, $indent = false)
+    public function getCategoriesAllowance($user, $module, $action, CategorySearchDb $categoryModel, $indent = false)
     {
         if ($indent && !is_string($indent)) $indent = ' &nbsp; &nbsp; '; // default string
 

@@ -3,7 +3,7 @@
 namespace Jan_Category;
 
 //class CategoryAclRepositoryDb implements CategoryAclRepositoryInterface
-class CategoryAclRepositoryDb // extends \AclRepository
+class CategoryAclRepositoryDb extends \AclRepository
 {
     public function getCategoryPermission($id)
     {
