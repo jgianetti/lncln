@@ -95,6 +95,8 @@ class AclHelper
      * @param string $perm
      * @return bool
      */
+    /*
+     * NEW WAY
     public function is_allowed($acl, $perm)
     {
         list($module, $action) = array_pad(explode('.', $perm), 2, null);
@@ -108,6 +110,79 @@ class AclHelper
         }
         return false;
     }
+    */
+
+    /*
+     * OLD WAY
+     */
+    public function is_allowed($acl, $perm, $action_filter_criteria = null, $action_filter_value = null)
+    {
+        if (!$acl) return false;
+
+        list($module, $action) = array_pad(explode('.', $perm), 2, null);
+
+        // assoc array
+        if (isset($acl['allow'])) {
+            return (
+                (isset($acl['allow']['*'])
+                    && (!isset($acl['deny'][$module])
+                        || (!isset($acl['deny'][$module]['*'])
+                            && (!isset($acl['deny'][$module][$action])
+                                || (!isset($acl['deny'][$module][$action]['*'])
+                                    && (!$action_filter_criteria
+                                        || !isset($acl['deny'][$module][$action][$action_filter_criteria])
+                                        || !isset($acl['deny'][$module][$action][$action_filter_criteria][$action_filter_value])
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+                || (isset($acl['allow'][$module])
+                    && (!$action
+                        || ((isset($acl['allow'][$module]['*'])
+                                && (!isset($acl['deny'][$module][$action])
+                                    || (!isset($acl['deny'][$module][$action]['*'])
+                                        && (!$action_filter_criteria
+                                            || !isset($acl['deny'][$module][$action][$action_filter_criteria])
+                                            || !isset($acl['deny'][$module][$action][$action_filter_criteria][$action_filter_value])
+                                        )
+                                    )
+                                )
+                            )
+                            || (isset($acl['allow'][$module][$action])
+                                && (!isset($acl['deny'][$module][$action]['*']))
+                                && (!$action_filter_criteria
+                                    || (isset($acl['allow'][$module][$action][$action_filter_criteria])
+                                        && ($action_filter_criteria == '*' || isset($acl['allow'][$module][$action][$action_filter_criteria][$action_filter_value]))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        // idx array
+        $is_allowed = false;
+        foreach ($acl as $permission) {
+            if ($permission['module'] == '*'
+                || ($permission['module'] == $module
+                    && ($permission['action'] == '*'
+                        || ($permission['action'] == $action
+                            && ($permission['action_filter_criteria'] == '*'
+                                || !$action_filter_criteria
+                                || ($permission['action_filter_criteria'] == $action_filter_criteria && $permission['action_filter_value'] == $action_filter_value)
+                            )
+                        )
+                    )
+                )
+            ) $is_allowed = $permission['allow'];
+        }
+        return $is_allowed;
+    }
+
 
     /**
      * Return scpecified permission filters

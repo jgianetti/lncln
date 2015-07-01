@@ -33,6 +33,7 @@
     "deny" : "Denegar",
     "module" : "M&oacute;dulo",
     "action" : "Acci&oacute;n",
+    "*"      : "Todos/as",
     "action_filter_criteria" : "Filtrar acci&oacute;n",
     "action_filter_value"  : "Valor del filtro",
     "inherited" : "Heredados",

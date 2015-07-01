@@ -74,13 +74,28 @@ $db = new Db($dbh);
 /************
  * USER ACL *
  ************/
+// new way
 $aclSearch = new Jan_Acl\AclSearchDb($db);
 $aclHelper = new Jan_Acl\AclHelper();
+/*
 $session_user['acl'] = (empty($session_user['id']) ? [] : $aclHelper->toAssoc($aclSearch->getMerged($session_user['id'])));
 $session->set('user', $session_user);
 
 // Validate Module & Action
 if ($module && $action && (($module != 'user') || ($action != 'login')) && !$aclHelper->is_allowed($session_user['acl'], $module.'.'.$action)) {
+    error_log('ACL :: '.$session_user['user'].' :: id='.$session_user['id'].' :: '.$module.'.'.$action);
+    //header('HTTP/1.0 403 Forbidden');
+    die(json_encode(['textStatus' => 'error', 'errors' => ['not_allowed_action']]));
+}
+*/
+
+// Old way
+$userAclRepository = new Jan_User\UserAclRepositoryDb($db);
+$session_user['acl'] = (empty($session_user['id']) ? [] : $userAclRepository->getCombinedAssoc($session_user['id'], new Jan_Category\CategorySearchDb($db)));
+$session->set('user', $session_user);
+
+// Validate Module & Action
+if ($module && $action && (($module != 'user') || ($action != 'login')) && !$userAclRepository->is_allowed($session_user['acl'], $module, $action)) {
     error_log('ACL :: '.$session_user['user'].' :: id='.$session_user['id'].' :: '.$module.'.'.$action);
     //header('HTTP/1.0 403 Forbidden');
     die(json_encode(['textStatus' => 'error', 'errors' => ['not_allowed_action']]));
@@ -124,7 +139,7 @@ if (!$request->is_ajax) {
     //lang file
     $lang['_base'] = json_decode(file_get_contents('_pub/lang/'.$session_user['lang'].'.json'), true);
 
-    include_file((!isset($controller_return['_layout']) ? 'layout.php' : 'modules/' . $module . '/layouts/' . $controller_return['_layout'] . '.php'), compact('cfg', 'lang', 'request', 'session', 'aclHelper', 'controller_return'));
+    include_file((!isset($controller_return['_layout']) ? 'layout.php' : 'modules/' . $module . '/layouts/' . $controller_return['_layout'] . '.php'), compact('cfg', 'lang', 'request', 'session', 'userAclRepository', 'aclHelper', 'controller_return'));
     die();
 }
 

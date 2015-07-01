@@ -105,9 +105,9 @@
                     <tbody>
                     <tr class="add">
                         <td><select name="allow"><option value="1">{{allow}}</option><option value="0">{{deny}}</option></select></td>
-                        <td><select name="module" onchange="App.modules.category.search.acl_on_module(this.value);"><option value="all">{{all}}</option></select></td>
-                        <td><select name="module_action" disabled="disabled" onchange="App.modules.category.search.acl_on_action(this.value);"><option value="all">{{all}}</option></select></td>
-                        <td><select name="action_filter_criteria" disabled="disabled" onchange="App.modules.category.search.acl_on_action_filter_criteria(this.value);"><option value="all">{{all}}</option></select></td>
+                        <td><select name="module" onchange="App.modules.category.search.acl_on_module(this.value);"><option value="*">{{all}}</option></select></td>
+                        <td><select name="module_action" disabled="disabled" onchange="App.modules.category.search.acl_on_action(this.value);"><option value="*">{{all}}</option></select></td>
+                        <td><select name="action_filter_criteria" disabled="disabled" onchange="App.modules.category.search.acl_on_action_filter_criteria(this.value);"><option value="*">{{all}}</option></select></td>
                         <td><select name="action_filter_value" disabled="disabled"></select></td>
                         <td><input type="submit" value="{{add}}"></td>
                     </tr>

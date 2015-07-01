@@ -35,17 +35,23 @@ class Controller {
         $categorySearch = new CategorySearchDb($App->db);
         $cc_categorySearch = new CC_CategorySearchDb($App->db);
 
+        $userAclRepository = new UserAclRepositoryDb($App->db);
+        $categories = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', 'search', $categorySearch, 1);
+
         $search_params  = $App->request->get_search_params(['image', 'fullname', 'category', 'cc_category', 'email', 'in_school', 'comments', 'deleted']);
 
-        // Category must include children
+        // If filtered by category -> include category's children
         if (!empty($search_params['filters']['category'])) $search_params['filters']['category'] = array_merge([$search_params['filters']['category']], $categorySearch->getChildrenIds($search_params['filters']['category']));
 
         if (!isset($search_params['filters']['deleted'])) $search_params['filters']['deleted'] = 0;
 
         // ACL FILTERS
-        $acl_filters = $acl->get_filters($App->session->get('user')['acl'], 'user.search');
-        if (isset($acl_filters['category_id'])) {
-            $search_params['filters']['category_id'] = array_merge([$search_params['filters']['category']], $categorySearch->getChildrenIds($acl_filters['category_id']), [$acl_filters['category_id']]);
+        // Categories filtered by user's custom filters + ACL filters
+        $search_params['filters'] = $userAclRepository->getFilters($search_params['filters'], $categories);
+
+        // SET ALL action filtered by current user
+        if ($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'set_all')) {
+            $filters['id'] = $App->session->get('user')['id'];
         }
 
         $users = $userSearch->get($search_params['select'], $search_params['filters'], $search_params['order_by'], $search_params['limit']);
@@ -68,8 +74,8 @@ class Controller {
 
         // first access - default filters
         if (!($App->request->fetch('sEcho'))) {
-            $categories = $categorySearch->get('full', isset($acl_filters['category_id']) ? ['id', array_merge($categorySearch->getChildrenIds($acl_filters['category_id']), [$acl_filters['category_id']])] : null);
-            foreach ($categories as $row) $return['categories'][] = array('value' => $row['id'], 'label' => utf8_encode($row['name']));
+            //$categories = $categorySearch->get('full', isset($acl_filters['category_id']) ? ['id', array_merge($categorySearch->getChildrenIds($acl_filters['category_id']), [$acl_filters['category_id']])] : null);
+            foreach ($categories as $row)  if ($row['_allow']) $return['categories'][] = array('value' => $row['id'], 'label' => utf8_encode($row['name']));
             foreach (($cc_categories = $cc_categorySearch->get('id,name')) as $row) $return['cc_categories'][] = array('value' => $row['id'], 'label' => utf8_encode($row['name']));
         }
 
@@ -103,7 +109,7 @@ class Controller {
         $filters = array('id' => $id);
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'mod') && $id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'mod') && $id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u[*]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         */
@@ -142,15 +148,16 @@ class Controller {
         $aclSearch  = new AclSearchDb($App->db);
         $acl        = new AclHelper($App->db);
 
+        $userAclRepository = new UserAclRepositoryDb($App->db);
+        $categorySearch    = new CategorySearchDb($App->db);
+        $categories        = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', 'search', $categorySearch, 1);
 
-        /*
         $filters = array('id' => $id);
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'mod') && $id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'mod') && $id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u[*]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
-        */
 
         if (!($user = $userSearch->getById('full',$id))) return ['textStatus' => 'error', 'errors' => 'not_found'];
 
@@ -170,7 +177,7 @@ class Controller {
 
         $return = array_merge($return, $this->getCategories($App));
 
-        $return['acl_data'] = $aclSearch->getMerged($id);
+        $return['acl_data'] = $userAclRepository->getCombined($id, $categorySearch);
 
         $userNwdSearch = new UserNwdSearchDb($App->db);
         $return['nwd'] = $userNwdSearch->get('*', array('user_id' => $id));
@@ -230,7 +237,7 @@ class Controller {
         /*
         // ACL FILTERS
         $filters = $acl->getFilters($filters, $categories);
-        if ($userAclRepository->selfOnly($session_user['acl'],'user', 'set_all')) $filters['id'] = $session_user['id'];
+        if ($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'set_all')) $filters['id'] = $App->session->get('user')['id'];
         */
 
         $ids = array();
@@ -317,7 +324,7 @@ class Controller {
         $filters = array('id' => $id);
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u.id',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -343,14 +350,14 @@ class Controller {
         /*
         $filters = array('id' => $id);
 
-        $session_user      = $App->session->get('user');
+        $App->session->get('user')      = $App->session->get('user');
         $userSearch        = new UserSearchDb($App->db);
 
         // ACL FILTERS
-        $categories        = $userAclRepository->getCategoriesAllowance($session_user, 'user', $App->request->getAction(), $categoryModel, 1);
+        $categories        = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', $App->request->getAction(), $categoryModel, 1);
 
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u[id,name,last_name]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -394,7 +401,7 @@ class Controller {
 
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u[id,name,last_name]',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -425,7 +432,7 @@ class Controller {
         $filters = array('id' => $id);
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $user_id != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $user_id != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u.id',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -453,7 +460,7 @@ class Controller {
 
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $nwd['user_id'] != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $nwd['user_id'] != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u.id',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -485,7 +492,7 @@ class Controller {
 
         // ACL FILTERS
         $filters = $userAclRepository->getFilters($filters, $categories);
-        if (($userAclRepository->selfOnly($session_user['acl'],'user', 'del') && $nwd['user_id'] != $session_user['id'])
+        if (($userAclRepository->selfOnly($App->session->get('user')['acl'],'user', 'del') && $nwd['user_id'] != $App->session->get('user')['id'])
             || (!($users = $userSearch->get('u.id',$filters)))
         ) return array('textStatus' => 'error', 'errors' => array('not_allowed_action'));
         $user = $users[0];
@@ -549,13 +556,12 @@ class Controller {
         $acl               = new AclHelper($App->db);
         $categorySearch    = new CategorySearchDb($App->db);
         $cc_categorySearch = new CC_CategorySearchDb($App->db);
-
-        $acl_filters = $acl->get_filters($App->session->get('user')['acl'],'user.add');
-        $cat_filters = [];
-        if (isset($acl_filters['category_id'])) $cat_filters['id'] = $acl_filters['category_id'];
+        $userAclRepository = new UserAclRepositoryDb($App->db);
+        $categories        = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', 'search', $categorySearch, 0);
 
         $return = [];
-        foreach ($categorySearch->get('full', $cat_filters) as $row) $return['categories'][$row['id']] = utf8_encode($row['name']);
+        $return['categories'] = [];
+        foreach ($categories as $row)  if ($row['_allow']) $return['categories'][$row['id']] = utf8_encode($row['name']);
         foreach ($cc_categorySearch->get('id,name', 'lft > 0') as $row) $return['cc_categories'][$row['id']] = utf8_encode($row['name']);
 
         return $return;

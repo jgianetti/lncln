@@ -283,11 +283,11 @@ var App = (function (my) {
                 console.log('user.view.acl_on_module()');
 
                 var $sel_action = $('#tab_acl').find('select[name="module_action"]');
-                $sel_action.empty().append(App.build_select_options(['all'], Globalize.localize('_base')));
+                $sel_action.empty().append(App.build_select_options(['*'], Globalize.localize('user')));
                 if (module == '*') $sel_action.prop('disabled', 'disabled');
                 else $sel_action.prop('disabled', false).append(App.build_select_options(_module.cache.view.acl_defs[module], Globalize.localize('_base')));
 
-                _module.view.acl_on_action('all');
+                _module.view.acl_on_action('*');
             };
 
             this.acl_on_action = function(action)
@@ -297,7 +297,7 @@ var App = (function (my) {
                 var $tab = $('#tab_acl');
                 var module = $tab.find('select[name="module"]')[0].value;
                 var $sel_action_filter = $tab.find('select[name="action_filter_criteria"]');
-                $sel_action_filter.empty().append(App.build_select_options(['all'], Globalize.localize('_base')));
+                $sel_action_filter.empty().append(App.build_select_options(['*'], Globalize.localize('user')));
 
                 if (action == '*' || $.inArray(module, ['user', 'rfid', 'user_absence', 'cc_purchase', 'cc_delivery']) == -1) $sel_action_filter.prop('disabled', 'disabled');
                 else {
@@ -317,7 +317,7 @@ var App = (function (my) {
                     }
                     $sel_action_filter.prop('disabled', false);
                 }
-                _module.view.acl_on_action_filter_criteria('all');
+                _module.view.acl_on_action_filter_criteria('*');
             };
 
             this.acl_on_action_filter_criteria = function(filter)
@@ -326,7 +326,7 @@ var App = (function (my) {
 
                 var $sel_action_filter_value = $('#tab_acl').find('select[name="action_filter_value"]');
                 $sel_action_filter_value.empty();
-                if (filter == 'all' || filter == 'self') $sel_action_filter_value.prop('disabled', 'disabled').prop("selectedIndex",1);
+                if (filter == '*' || filter == 'self') $sel_action_filter_value.prop('disabled', 'disabled').prop("selectedIndex",1);
                 else $sel_action_filter_value.prop('disabled', false).append('<option value="self">'+Globalize.localize('user')['self']+'</option>').append(App.build_select_options(_module.cache.view.categories));
             };
 

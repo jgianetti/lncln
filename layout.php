@@ -29,7 +29,7 @@ $session_user = $session->get('user');
         <div id="header">
             <h1>Nuestra Escuela</h1>
         </div>
-        <nav><?php echo include_file('navbar.php', compact('cfg','lang','session', 'aclHelper')); ?><br class="clr"></nav>
+        <nav><?php echo include_file('navbar.php', compact('cfg','lang','session', 'userAclRepository', 'aclHelper')); ?><br class="clr"></nav>
     </header>
     
     <div id="main">

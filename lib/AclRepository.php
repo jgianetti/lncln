@@ -42,13 +42,13 @@ class AclRepository
             }
 
             // all modules \ all actions
-            if ($permission['module'] == 'all') {
-                $acl_combined[$to_add] = array('all' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
+            if ($permission['module'] == '*') {
+                $acl_combined[$to_add] = array('*' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
                 $acl_combined[$to_remove] = null;
             }
             // module \ all actions
-            elseif ($permission['action'] == 'all') {
-                $acl_combined[$to_add][$permission['module']] = array('all' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
+            elseif ($permission['action'] == '*') {
+                $acl_combined[$to_add][$permission['module']] = array('*' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
                 unset($acl_combined[$to_remove][$permission['module']]);
             }
             // module \ action
@@ -56,8 +56,8 @@ class AclRepository
                 if (!isset($acl_combined[$to_add][$permission['module']])) $acl_combined[$to_add][$permission['module']] = array();
 
                 // all criteria
-                if ($permission['action_filter_criteria'] == 'all') {
-                    $acl_combined[$to_add][$permission['module']][$permission['action']] = array('all' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
+                if ($permission['action_filter_criteria'] == '*') {
+                    $acl_combined[$to_add][$permission['module']][$permission['action']] = array('*' => array('id' => @$permission['id'], 'inherited_id' => @$permission['inherited_id'], 'inherited_name' => @$permission['inherited_name']));
                     if (isset($acl_combined[$to_remove][$permission['module']])) {
                         unset($acl_combined[$to_remove][$permission['module']][$permission['action']]);
                         if (!$acl_combined[$to_remove][$permission['module']]) unset($acl_combined[$to_remove][$permission['module']]);
@@ -102,7 +102,7 @@ class AclRepository
             if (!$modules) continue;
             foreach ($modules as $module => $actions) {
                 $permission['module'] = $module;
-                if ($module == 'all') {
+                if ($module == '*') {
                     $permission['action'] = $permission['action_filter_criteria'] = $permission['action_filter_value'] = $permission['action_filter_value_label'] = null;
                     $permission['id'] = $actions['id'];
                     $permission['inherited_id'] = $actions['inherited_id'];
@@ -113,7 +113,7 @@ class AclRepository
 
                 foreach ($actions as $action => $action_filter_criterias) {
                     $permission['action'] = $action;
-                    if ($action == 'all') {
+                    if ($action == '*') {
                         $permission['action_filter_criteria'] = $permission['action_filter_value'] = $permission['action_filter_value_label'] = null;
                         $permission['id'] = $action_filter_criterias['id'];
                         $permission['inherited_id'] = $action_filter_criterias['inherited_id'];
@@ -124,7 +124,7 @@ class AclRepository
 
                     foreach ($action_filter_criterias as $action_filter_criteria => $action_filter_values) {
                         $permission['action_filter_criteria'] = $action_filter_criteria;
-                        if ($action_filter_criteria == 'all') {
+                        if ($action_filter_criteria == '*') {
                             $permission['action_filter_value'] = $permission['action_filter_value_label'] = null;
                             $permission['id'] = $action_filter_values['id'];
                             $permission['inherited_id'] = $action_filter_values['inherited_id'];
@@ -155,11 +155,11 @@ class AclRepository
         // assoc array
         if (isset($acl['allow'])) {
             return (
-                (isset($acl['allow']['all'])
+                (isset($acl['allow']['*'])
                     && (!isset($acl['deny'][$module])
-                        || (!isset($acl['deny'][$module]['all'])
+                        || (!isset($acl['deny'][$module]['*'])
                             && (!isset($acl['deny'][$module][$action])
-                                || (!isset($acl['deny'][$module][$action]['all'])
+                                || (!isset($acl['deny'][$module][$action]['*'])
                                     && (!$action_filter_criteria
                                         || !isset($acl['deny'][$module][$action][$action_filter_criteria])
                                         || !isset($acl['deny'][$module][$action][$action_filter_criteria][$action_filter_value])
@@ -171,9 +171,9 @@ class AclRepository
                 )
                 || (isset($acl['allow'][$module])
                     && (!$action
-                        || ((isset($acl['allow'][$module]['all'])
+                        || ((isset($acl['allow'][$module]['*'])
                                 && (!isset($acl['deny'][$module][$action])
-                                    || (!isset($acl['deny'][$module][$action]['all'])
+                                    || (!isset($acl['deny'][$module][$action]['*'])
                                         && (!$action_filter_criteria
                                             || !isset($acl['deny'][$module][$action][$action_filter_criteria])
                                             || !isset($acl['deny'][$module][$action][$action_filter_criteria][$action_filter_value])
@@ -182,10 +182,10 @@ class AclRepository
                                 )
                             )
                             || (isset($acl['allow'][$module][$action])
-                                && (!isset($acl['deny'][$module][$action]['all']))
+                                && (!isset($acl['deny'][$module][$action]['*']))
                                 && (!$action_filter_criteria
                                     || (isset($acl['allow'][$module][$action][$action_filter_criteria])
-                                        && ($action_filter_criteria == 'all' || isset($acl['allow'][$module][$action][$action_filter_criteria][$action_filter_value]))
+                                        && ($action_filter_criteria == '*' || isset($acl['allow'][$module][$action][$action_filter_criteria][$action_filter_value]))
                                     )
                                 )
                             )
@@ -198,11 +198,11 @@ class AclRepository
         // idx array
         $is_allowed = false;
         foreach ($acl as $permission) {
-            if ($permission['module'] == 'all'
+            if ($permission['module'] == '*'
                 || ($permission['module'] == $module
-                    && ($permission['action'] == 'all'
+                    && ($permission['action'] == '*'
                         || ($permission['action'] == $action
-                            && ($permission['action_filter_criteria'] == 'all'
+                            && ($permission['action_filter_criteria'] == '*'
                                 || !$action_filter_criteria
                                 || ($permission['action_filter_criteria'] == $action_filter_criteria && $permission['action_filter_value'] == $action_filter_value)
                             )

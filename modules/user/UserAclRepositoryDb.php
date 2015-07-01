@@ -90,7 +90,7 @@ class UserAclRepositoryDb extends \AclRepository
                     IF (action_filter_criteria = "category_id", cat.name, NULL) AS action_filter_value_label
                 FROM category_acl AS a_c
                 LEFT JOIN category AS inherited ON inherited.id = a_c.category_id
-                LEFT JOIN category AS cat ON cat.id = a_c.category_id
+                LEFT JOIN category AS cat ON cat.id = a_c.action_filter_value
                 WHERE
                     a_c.category_id IN('.$category_ids_params.')
                 ORDER BY module, action, action_filter_criteria, action_filter_value_label
@@ -159,7 +159,7 @@ class UserAclRepositoryDb extends \AclRepository
         $nested_set = array();
         foreach ($categories as &$e) {
             // Root category (ie. "All")
-            if (!count($nested_set)) $allow = $this->is_allowed($user['acl'], $module, $action, 'all');
+            if (!count($nested_set)) $allow = $this->is_allowed($user['acl'], $module, $action, '*');
             else while (count($nested_set) && $e['rgt']>$nested_set[count($nested_set)-1]['rgt']) { array_pop($nested_set); $allow = $nested_set[count($nested_set)-1]['allow']; }
 
             if (count($nested_set) && $indent) $e['name'] = str_repeat(' '.$indent.' ',count($nested_set)-1).utf8_encode($e['name']);
