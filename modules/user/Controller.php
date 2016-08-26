@@ -529,6 +529,14 @@ class Controller {
             return ['textStatus' => 'error', 'errors' => $errors];
         }
 
+        // Not deleted
+        $deleted = $App->request->post('deleted');
+        if (!$deleted || !intval($deleted)) {
+            $user['deleted']    = '0';
+            $user['deleted_on'] = null;
+            $user['deleted_by'] = null;
+        }
+
         // Category Ids and Names get cached in User table
         if (!empty($_POST['cat_ids']))    $user->setCats($categorySearch->getByIds('full', $App->request->fetch('cat_ids')));
         if (!empty($_POST['cc_cat_ids'])) $user->setCCCats($cc_categorySearch->getByIds('full', $App->request->fetch('cc_cat_ids')));
