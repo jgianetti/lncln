@@ -512,6 +512,8 @@ class Controller {
         $categorySearch    = new CategorySearchDb($App->db);
         $cc_categorySearch = new CC_CategorySearchDb($App->db);
 
+        $session_user = $App->session->get('user');
+
         $user = new User($old_row ? array_merge($old_row, $App->request->post()) : $App->request->post());
         $user['type'] = 'employee';
 
@@ -519,7 +521,8 @@ class Controller {
             if (is_null($App->request->post('pwd'))) return ['textStatus' => 'error', 'errors' => ['pwd'=>'null']];
         }
         else { // Mod
-            if ($App->request->post('pwd') && !empty($old_row['pwd']) && (!$App->request->post('pwd_old') || sha1($App->request->post('pwd_old')) != $old_row['pwd'])) return ['textStatus' => 'error', 'errors' => ['old_pwd_not_match']];
+            // Matias puede modificar pwd
+            if (($session_user['id'] != '4e31ab94dbe6d') && $App->request->post('pwd') && !empty($old_row['pwd']) && (!$App->request->post('pwd_old') || sha1($App->request->post('pwd_old')) != $old_row['pwd'])) return ['textStatus' => 'error', 'errors' => ['old_pwd_not_match']];
         }
 
         if (($errors = $user->getErrors())) return ['textStatus' => 'error', 'errors' => $errors];
