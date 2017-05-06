@@ -1,11 +1,52 @@
-nbproject
 ._*
-.~lock.*
+.bash_history
 .buildpath
+.cache
+.composer
+composer.lock
+.config
 .DS_Store
+errors.lognbproject
 .idea
+.~lock.*
+nbproject
 .project
 .settings
-composer.lock
+.vagrant
 vendor/bin
-errors.log
+
+# root folder
+.*/*
+
+# Laravel
+#/server/bootstrap/compiled.php
+#/server/vendor/*
+#/server/node_modules
+/server/public/storage
+/server/composer.phar
+/server/.env
+/server/.DS_Store
+/server/Thumbs.db
+/server/Homestead.yaml
+/server/Homestead.json
+
+
+# C extensions
+*.so
+
+# Mr Developer / eclipse pydev
+.mr.developer.cfg
+.project
+.pydevproject
+.settings
+
+# Rope
+.ropeproject
+
+# Webstorm
+.idea
+
+# Vim
+*~
+*.swp
+*.swo

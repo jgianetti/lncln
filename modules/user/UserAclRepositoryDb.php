@@ -84,6 +84,10 @@ class UserAclRepositoryDb extends \AclRepository
         $category_ids = array_merge($categoryModel->getParentsIds($category_ids), $category_ids);
         $category_ids_params = implode(',', array_fill(0, count($category_ids), '?'));
 
+        if (!$category_ids) {
+            return [];
+        }
+
         $sql = 'SELECT a_c.*,
                     inherited.id AS inherited_id,
                     inherited.name AS inherited_name,
