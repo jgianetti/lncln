@@ -274,15 +274,17 @@ class Controller {
                 'Planta Funcional Secundaria',
                 'Permisos',
                 'Admin Educacion Fisica',
-                'Visita'
+                'Admin Plantas funcionales',
+                'Visitas'
             ))) continue;
 
             if (in_array($cat['id'], array(
-                '4ebd7ff5c36fd',
-                '4ebd8005696b8',
-                '53dcff757aee3',
-                '53dd005e74145',
-                '4ec560eb19f43'
+                '4ebd7ff5c36fd', // PF Primaria
+                '4ebd8005696b8', // PF Secundaria
+                '53dcff757aee3', // Permisos
+                '53dd005e74145', // Admin Educacion Fisica
+                '545c9f01d6055', // Admin Plantas funcionales
+                '5913c45fdfb97' // Visitas
             ))) continue;
 
             if (!($users = $userSearch->get('u[id, name, last_name, cat_ids, cat_names, cc_cat_ids, cc_cat_names]', array(
