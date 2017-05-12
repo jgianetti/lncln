@@ -60,10 +60,12 @@ class Controller
 
         if (($errors = $category->getErrors($category))) return ['textStatus' => 'error', 'errors' => $errors];
 
+        /*
         if (($duplicated_data = $categoryRepository->duplicatedData(array_intersect_key($App->request->post(), array_flip(['name']))))) {
             foreach ($duplicated_data as $e) $errors[$e] = 'duplicated_data';
             return ['textStatus' => 'error', 'errors' => $errors];
         }
+        */
 
         if (!($id = $categoryRepository->insertAt($category->getArrayCopy(),$parent_id))) return ['textStatus' => 'error', 'errors' => ['error_db' => 'error_add']];
 
@@ -95,10 +97,12 @@ class Controller
 
         if (($errors = $new_category->getErrors())) return ['textStatus' => 'error', 'errors' => $errors];
 
+        /*
         if (($duplicated_data = $categoryRepository->duplicatedData(array_intersect_key($App->request->post(), array_flip(['name'])), $id))) {
             foreach ($duplicated_data as $e) $errors[$e] = 'duplicated_data';
             return ['textStatus' => 'error', 'errors' => $errors];
         }
+        */
 
         if ($categoryRepository->save($new_category->getArrayCopy()) == false) return ['textStatus' => 'error', 'errors' => ['error_db' => 'error_mod']];
 
