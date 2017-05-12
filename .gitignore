@@ -8,6 +8,7 @@ composer.lock
 .DS_Store
 errors.lognbproject
 .idea
+*.iml
 .~lock.*
 nbproject
 .project
