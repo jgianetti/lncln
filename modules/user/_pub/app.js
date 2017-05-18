@@ -50,7 +50,7 @@ var App = (function (my) {
 
                 App.cacheAppWindows();
 
-                var theaders = ['image', 'fullname', 'category', 'cc_category', 'email', 'in_school', 'comments', 'deleted'];
+                var theaders = ['image', 'fullname', 'category', 'email', 'in_school', 'comments', 'deleted'];
 
                 var $table = App.buildDataTable(theaders, Globalize.localize('user'), 'a');
                 $table.addClass('td-first-image');
@@ -95,24 +95,23 @@ var App = (function (my) {
                                 return source.cat_names;
                             }
                         },
-                        { "aTargets": [ 3 ], "mData": "cc_cat_names" },
-                        { "aTargets": [ 4 ], "mData": "email" },
-                        { "aTargets": [ 5 ], // in_school
+                        { "aTargets": [ 3 ], "mData": "email" },
+                        { "aTargets": [ 4 ], // in_school
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') { return source.in_school?Globalize.localize('_base')['yes']:Globalize.localize('_base')['no'] }
                                 return source.in_school;
                             }
                         },
-                        { "aTargets": [ 6 ], "mData": "comments" },
-                        { "aTargets": [ 7 ], // deleted
+                        { "aTargets": [ 5 ], "mData": "comments" },
+                        { "aTargets": [ 6 ], // deleted
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') { return source.deleted?Globalize.localize('_base')['yes']:Globalize.localize('_base')['no'] }
                                 return source.deleted;
                             }
                         },
-                        { "aTargets": [ 8 ], // Action
+                        { "aTargets": [ 7 ], // Action
                             "bSortable" : false,
                             "mData": function ( source, type, val ) {
                                 if (type === 'display') {
@@ -131,7 +130,6 @@ var App = (function (my) {
                         null, // image
                         { type: "text" }, // fullname
                         { type: "select", values: data.categories }, // category
-                        { type: "select", values: data.cc_categories },  // cc_category
                         { type: "text" }, // email
                         { type: "select", values: [  // in_school
                             { "value":"0","label":Globalize.localize('_base')['no'] },
@@ -156,7 +154,7 @@ var App = (function (my) {
             this.set_all = function(e)
             {
                 console.log('user.search.set_all()');
-                var theaders = ['image', 'fullname', 'category', 'cc_category', 'email', 'barcode', 'in_school', 'comments', 'deleted'];
+                var theaders = ['image', 'fullname', 'category', 'email', 'barcode', 'in_school', 'comments', 'deleted'];
                 var query_string = '';
 
                 // Get DataTable filters and build QueryString
