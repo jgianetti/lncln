@@ -38,7 +38,7 @@ class Controller {
         $userAclRepository = new UserAclRepositoryDb($App->db);
         $categories = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', 'search', $categorySearch, 1);
 
-        $search_params  = $App->request->get_search_params(['image', 'fullname', 'dni', 'rfid', 'category', 'cc_category', 'email', 'in_school', 'comments', 'deleted']);
+        $search_params  = $App->request->get_search_params(['image', 'fullname', 'dni', 'rfid', 'category', 'email', 'in_school', 'comments', 'deleted']);
 
         // If filtered by category -> include category's children
         if (!empty($search_params['filters']['category'])) $search_params['filters']['category'] = array_merge([$search_params['filters']['category']], $categorySearch->getChildrenIds($search_params['filters']['category']));
@@ -262,7 +262,28 @@ class Controller {
         $return['categories'] = array();
 
         // Get Employee sub-categories
-        $categories = $categorySearch->getChildren('0000000000001'); // Empleados
+
+        // Extreme dirty hotfix
+        $categories = $App->db->prepareFetchAll("
+            SELECT node.id, node.name, (COUNT(parent.name) - 1) AS depth
+            FROM
+              category AS node,
+              category AS parent
+            WHERE
+              node.lft BETWEEN parent.lft AND parent.rgt
+              AND node.id NOT IN( -- excluded categories by M. Olivera
+                '4ebd7ff5c36fd', -- PF Primaria
+                '4ebd8005696b8', -- PF Secundaria
+                '53dcff757aee3', -- Permisos
+                '53dd005e74145', -- Admin Ed Fisica
+                '545c9f01d6055', -- Admin Plantas Funcionales
+                '5913c45fdfb97' -- Visitas
+              )
+            GROUP BY node.id
+            HAVING depth = 2
+            ORDER BY node.lft
+        ");
+        //$categories = $categorySearch->getChildren('0000000000001'); // Empleados
 
         // Avoid duplicating users who belong to multiple categories
         $users_printed = array();
@@ -276,15 +297,6 @@ class Controller {
                 'Admin Educacion Fisica',
                 'Admin Plantas funcionales',
                 'Visitas'
-            ))) continue;
-
-            if (in_array($cat['id'], array(
-                '4ebd7ff5c36fd', // PF Primaria
-                '4ebd8005696b8', // PF Secundaria
-                '53dcff757aee3', // Permisos
-                '53dd005e74145', // Admin Educacion Fisica
-                '545c9f01d6055', // Admin Plantas funcionales
-                '5913c45fdfb97' // Visitas
             ))) continue;
 
             if (!($users = $userSearch->get('u[id, name, last_name, cat_ids, cat_names, cc_cat_ids, cc_cat_names]', array(
