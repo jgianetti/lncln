@@ -56,7 +56,7 @@ class UserSearchDb implements UserSearchInterface
         if (!empty($search_data['user']))        $this->db->where('u.user',$search_data['user']);
         if (!empty($search_data['pwd']))         $this->db->where('u.pwd',sha1($search_data['pwd']));
         if (!empty($search_data['dni']))         $this->db->where('u.dni LIKE ?')->stmt_values('%' . $search_data['dni'] . '%');
-        if (!empty($search_data['rfid']))        $this->db->where('u.rfid LIKE ?')->stmt_values('%' . $search_data['rfid'] . '%');
+        if (!empty($search_data['rfid']))        $this->db->where('u.rfid', $search_data['rfid']);
         if (!empty($search_data['fullname']))    $this->db->where('(CONCAT(u.name," ", u.last_name) LIKE ? OR CONCAT(u.last_name," ", u.name) LIKE ?)')->stmt_values(array_fill(0,2,'%'.iconv("UTF-8", "ISO-8859-1//TRANSLIT", trim(str_replace(array(',', '  '),' ', $search_data['fullname']))).'%'));
         if (!empty($search_data['category']))    $this->db->where('( FIND_IN_SET(?, u.cat_ids) ' . str_repeat(' OR FIND_IN_SET(?, u.cat_ids) ', count($search_data['category'])-1) . ' )')->stmt_values($search_data['category']);
         if (!empty($search_data['cc_category'])) $this->db->where('( FIND_IN_SET(?, u.cc_cat_ids) ' . str_repeat(' OR FIND_IN_SET(?, u.cc_cat_ids) ', count($search_data['cc_category'])-1) . ' )')->stmt_values($search_data['cc_category']);

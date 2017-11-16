@@ -93,7 +93,7 @@ var App = (function (my) {
                         { "aTargets": [ 3 ], "mData": "rfid" },
                         { "aTargets": [ 4 ], // categories
                             "mData": function ( source, type, val ) {
-                                if (type === 'display') { return source.cat_names.replace(',','<br>') }
+                                if (type === 'display') { return (source.cat_names ? source.cat_names.replace(',','<br>') : ''); }
                                 return source.cat_names;
                             }
                         },
@@ -132,8 +132,8 @@ var App = (function (my) {
                         null, // image
                         { type: "text" }, // fullname
                         { type: "text" }, // dni
-                        { type: "text" }, // rfid
-                        { type: "select", values: data.categories }, // category
+                        null, // rfid
+                        { type: "select", values: (data.categories ? data.categories : []) }, // category
                         { type: "text" }, // email
                         { type: "select", values: [  // in_school
                             { "value":"0","label":Globalize.localize('_base')['no'] },
