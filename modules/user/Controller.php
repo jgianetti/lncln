@@ -38,7 +38,7 @@ class Controller {
         $userAclRepository = new UserAclRepositoryDb($App->db);
         $categories = $userAclRepository->getCategoriesAllowance($App->session->get('user'), 'user', 'search', $categorySearch, 1);
 
-        $search_params  = $App->request->get_search_params(['image', 'fullname', 'category', 'cc_category', 'email', 'in_school', 'comments', 'deleted']);
+        $search_params  = $App->request->get_search_params(['image', 'fullname', 'dni', 'rfid', 'category', 'cc_category', 'email', 'in_school', 'comments', 'deleted']);
 
         // If filtered by category -> include category's children
         if (!empty($search_params['filters']['category'])) $search_params['filters']['category'] = array_merge([$search_params['filters']['category']], $categorySearch->getChildrenIds($search_params['filters']['category']));

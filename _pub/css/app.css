@@ -111,6 +111,7 @@ table td { text-align: center; border-bottom: 1px solid #ccc; border-left: 1px d
 table th:first-child, table td:first-child { border-left: 1px solid #ccc;}
 table th.action { width: 10em;}
 table td { vertical-align: middle; }
+table.dataTable td { padding: 3px 5px; }
 table tbody td a {display: block; padding: .6em .5em;}
 table tbody td:first-child {text-align: left; }
 
@@ -235,6 +236,10 @@ ul.cc-help-tutorial li { margin: 1em; line-height: 1.8em; }
 ul.cc-help-tutorial li span.title { font-weight: bold; color: #666; }
 ul.cc-help-tutorial li a { margin: 1em; padding: .2em; }
 
+#app-window-user-list {
+    border: none;
+    overflow: auto;
+}
 
 table.user-print-in-school {
     margin-bottom: 2em;
